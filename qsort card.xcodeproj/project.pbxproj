@@ -1,0 +1,308 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B30AABD117252570001B52AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30AABD01725256F001B52AE /* UIKit.framework */; };
+		B30AABD317252570001B52AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30AABD217252570001B52AE /* Foundation.framework */; };
+		B30AABD517252570001B52AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30AABD417252570001B52AE /* CoreGraphics.framework */; };
+		B30AABDB17252570001B52AE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B30AABD917252570001B52AE /* InfoPlist.strings */; };
+		B30AABDD17252570001B52AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B30AABDC17252570001B52AE /* main.m */; };
+		B30AABE117252570001B52AE /* qsortCardAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B30AABE017252570001B52AE /* qsortCardAppDelegate.m */; };
+		B30AABE317252570001B52AE /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B30AABE217252570001B52AE /* Default.png */; };
+		B30AABE517252570001B52AE /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B30AABE417252570001B52AE /* Default@2x.png */; };
+		B30AABE717252570001B52AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B30AABE617252570001B52AE /* Default-568h@2x.png */; };
+		B30AABEA17252570001B52AE /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B30AABE817252570001B52AE /* MainStoryboard.storyboard */; };
+		B30AABED17252570001B52AE /* qsortCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B30AABEC17252570001B52AE /* qsortCardViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B30AABCD1725256F001B52AE /* qsort card.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "qsort card.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B30AABD01725256F001B52AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B30AABD217252570001B52AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B30AABD417252570001B52AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B30AABD817252570001B52AE /* qsort card-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "qsort card-Info.plist"; sourceTree = "<group>"; };
+		B30AABDA17252570001B52AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B30AABDC17252570001B52AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B30AABDE17252570001B52AE /* qsort card-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "qsort card-Prefix.pch"; sourceTree = "<group>"; };
+		B30AABDF17252570001B52AE /* qsortCardAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = qsortCardAppDelegate.h; sourceTree = "<group>"; };
+		B30AABE017252570001B52AE /* qsortCardAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = qsortCardAppDelegate.m; sourceTree = "<group>"; };
+		B30AABE217252570001B52AE /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		B30AABE417252570001B52AE /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		B30AABE617252570001B52AE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B30AABE917252570001B52AE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		B30AABEB17252570001B52AE /* qsortCardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = qsortCardViewController.h; sourceTree = "<group>"; };
+		B30AABEC17252570001B52AE /* qsortCardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = qsortCardViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B30AABCA1725256F001B52AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B30AABD117252570001B52AE /* UIKit.framework in Frameworks */,
+				B30AABD317252570001B52AE /* Foundation.framework in Frameworks */,
+				B30AABD517252570001B52AE /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B30AABC41725256F001B52AE = {
+			isa = PBXGroup;
+			children = (
+				B30AABD617252570001B52AE /* qsort card */,
+				B30AABCF1725256F001B52AE /* Frameworks */,
+				B30AABCE1725256F001B52AE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B30AABCE1725256F001B52AE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B30AABCD1725256F001B52AE /* qsort card.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B30AABCF1725256F001B52AE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B30AABD01725256F001B52AE /* UIKit.framework */,
+				B30AABD217252570001B52AE /* Foundation.framework */,
+				B30AABD417252570001B52AE /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B30AABD617252570001B52AE /* qsort card */ = {
+			isa = PBXGroup;
+			children = (
+				B30AABDF17252570001B52AE /* qsortCardAppDelegate.h */,
+				B30AABE017252570001B52AE /* qsortCardAppDelegate.m */,
+				B30AABE817252570001B52AE /* MainStoryboard.storyboard */,
+				B30AABEB17252570001B52AE /* qsortCardViewController.h */,
+				B30AABEC17252570001B52AE /* qsortCardViewController.m */,
+				B30AABD717252570001B52AE /* Supporting Files */,
+			);
+			path = "qsort card";
+			sourceTree = "<group>";
+		};
+		B30AABD717252570001B52AE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B30AABD817252570001B52AE /* qsort card-Info.plist */,
+				B30AABD917252570001B52AE /* InfoPlist.strings */,
+				B30AABDC17252570001B52AE /* main.m */,
+				B30AABDE17252570001B52AE /* qsort card-Prefix.pch */,
+				B30AABE217252570001B52AE /* Default.png */,
+				B30AABE417252570001B52AE /* Default@2x.png */,
+				B30AABE617252570001B52AE /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B30AABCC1725256F001B52AE /* qsort card */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B30AABF017252570001B52AE /* Build configuration list for PBXNativeTarget "qsort card" */;
+			buildPhases = (
+				B30AABC91725256F001B52AE /* Sources */,
+				B30AABCA1725256F001B52AE /* Frameworks */,
+				B30AABCB1725256F001B52AE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "qsort card";
+			productName = "qsort card";
+			productReference = B30AABCD1725256F001B52AE /* qsort card.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B30AABC51725256F001B52AE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = qsortCard;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Chia Lin";
+			};
+			buildConfigurationList = B30AABC81725256F001B52AE /* Build configuration list for PBXProject "qsort card" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B30AABC41725256F001B52AE;
+			productRefGroup = B30AABCE1725256F001B52AE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B30AABCC1725256F001B52AE /* qsort card */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B30AABCB1725256F001B52AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B30AABDB17252570001B52AE /* InfoPlist.strings in Resources */,
+				B30AABE317252570001B52AE /* Default.png in Resources */,
+				B30AABE517252570001B52AE /* Default@2x.png in Resources */,
+				B30AABE717252570001B52AE /* Default-568h@2x.png in Resources */,
+				B30AABEA17252570001B52AE /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B30AABC91725256F001B52AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B30AABDD17252570001B52AE /* main.m in Sources */,
+				B30AABE117252570001B52AE /* qsortCardAppDelegate.m in Sources */,
+				B30AABED17252570001B52AE /* qsortCardViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B30AABD917252570001B52AE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B30AABDA17252570001B52AE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B30AABE817252570001B52AE /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B30AABE917252570001B52AE /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B30AABEE17252570001B52AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		B30AABEF17252570001B52AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B30AABF117252570001B52AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "qsort card/qsort card-Prefix.pch";
+				INFOPLIST_FILE = "qsort card/qsort card-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B30AABF217252570001B52AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "qsort card/qsort card-Prefix.pch";
+				INFOPLIST_FILE = "qsort card/qsort card-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B30AABC81725256F001B52AE /* Build configuration list for PBXProject "qsort card" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B30AABEE17252570001B52AE /* Debug */,
+				B30AABEF17252570001B52AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B30AABF017252570001B52AE /* Build configuration list for PBXNativeTarget "qsort card" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B30AABF117252570001B52AE /* Debug */,
+				B30AABF217252570001B52AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B30AABC51725256F001B52AE /* Project object */;
+}
