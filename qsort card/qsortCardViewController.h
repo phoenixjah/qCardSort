@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class iCarousel;
 
 @interface qsortCardViewController : UIViewController
+
+@property (nonatomic,strong) iCarousel *unsortedCardsView;
+@property (nonatomic,strong) NSMutableArray *unsortedCardsData;
+@property (nonatomic,strong) NSMutableArray *scoreBoxsData;
+@property (nonatomic,strong) NSMutableArray *scoreBoxsView;//totally three iCarousel views
+@property (nonatomic,strong) NSMutableArray *allCards;
 
 @end

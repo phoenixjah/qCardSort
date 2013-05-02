@@ -18,6 +18,14 @@
 		B30AABE717252570001B52AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B30AABE617252570001B52AE /* Default-568h@2x.png */; };
 		B30AABEA17252570001B52AE /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B30AABE817252570001B52AE /* MainStoryboard.storyboard */; };
 		B30AABED17252570001B52AE /* qsortCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B30AABEC17252570001B52AE /* qsortCardViewController.m */; };
+		B311116D172CF9BB009A98CB /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = B311116C172CF9BB009A98CB /* iCarousel.m */; };
+		B311116F172D037E009A98CB /* page.png in Resources */ = {isa = PBXBuildFile; fileRef = B311116E172D037E009A98CB /* page.png */; };
+		B3354D78172675660072DB04 /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3354D77172675660072DB04 /* CardView.m */; };
+		B33B578C172A87E50007B041 /* circle.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B33B578A172A87E50007B041 /* circle.jpg */; };
+		B33B578D172A87E50007B041 /* circle_b.png in Resources */ = {isa = PBXBuildFile; fileRef = B33B578B172A87E50007B041 /* circle_b.png */; };
+		B39AE5BC17302EB50053A560 /* card.png in Resources */ = {isa = PBXBuildFile; fileRef = B39AE5BB17302EB50053A560 /* card.png */; };
+		B3D6CED91727EF7F0096E7F2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */; };
+		B3FA4EB717313E610031B5D0 /* CardData.m in Sources */ = {isa = PBXBuildFile; fileRef = B3FA4EB617313E610031B5D0 /* CardData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +45,18 @@
 		B30AABE917252570001B52AE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		B30AABEB17252570001B52AE /* qsortCardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = qsortCardViewController.h; sourceTree = "<group>"; };
 		B30AABEC17252570001B52AE /* qsortCardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = qsortCardViewController.m; sourceTree = "<group>"; };
+		B311116B172CF9BB009A98CB /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
+		B311116C172CF9BB009A98CB /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		B311116E172D037E009A98CB /* page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page.png; sourceTree = "<group>"; };
+		B3354D76172675660072DB04 /* CardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardView.h; sourceTree = "<group>"; };
+		B3354D77172675660072DB04 /* CardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardView.m; sourceTree = "<group>"; };
+		B33B578A172A87E50007B041 /* circle.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = circle.jpg; sourceTree = "<group>"; };
+		B33B578B172A87E50007B041 /* circle_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle_b.png; sourceTree = "<group>"; };
+		B39AE5BB17302EB50053A560 /* card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card.png; sourceTree = "<group>"; };
+		B3C7728917292344004AD718 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
+		B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B3FA4EB517313E610031B5D0 /* CardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardData.h; sourceTree = "<group>"; };
+		B3FA4EB617313E610031B5D0 /* CardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3D6CED91727EF7F0096E7F2 /* QuartzCore.framework in Frameworks */,
 				B30AABD117252570001B52AE /* UIKit.framework in Frameworks */,
 				B30AABD317252570001B52AE /* Foundation.framework in Frameworks */,
 				B30AABD517252570001B52AE /* CoreGraphics.framework in Frameworks */,
@@ -56,6 +77,10 @@
 		B30AABC41725256F001B52AE = {
 			isa = PBXGroup;
 			children = (
+				B311116A172CF9BB009A98CB /* iCarousel */,
+				B33B5789172A87D00007B041 /* Images */,
+				B3C7728917292344004AD718 /* Constant.h */,
+				B3D6CEDD1727F8420096E7F2 /* Elements */,
 				B30AABD617252570001B52AE /* qsort card */,
 				B30AABCF1725256F001B52AE /* Frameworks */,
 				B30AABCE1725256F001B52AE /* Products */,
@@ -73,6 +98,7 @@
 		B30AABCF1725256F001B52AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */,
 				B30AABD01725256F001B52AE /* UIKit.framework */,
 				B30AABD217252570001B52AE /* Foundation.framework */,
 				B30AABD417252570001B52AE /* CoreGraphics.framework */,
@@ -105,6 +131,37 @@
 				B30AABE617252570001B52AE /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B311116A172CF9BB009A98CB /* iCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				B311116B172CF9BB009A98CB /* iCarousel.h */,
+				B311116C172CF9BB009A98CB /* iCarousel.m */,
+			);
+			path = iCarousel;
+			sourceTree = "<group>";
+		};
+		B33B5789172A87D00007B041 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				B39AE5BB17302EB50053A560 /* card.png */,
+				B311116E172D037E009A98CB /* page.png */,
+				B33B578A172A87E50007B041 /* circle.jpg */,
+				B33B578B172A87E50007B041 /* circle_b.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		B3D6CEDD1727F8420096E7F2 /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				B3354D76172675660072DB04 /* CardView.h */,
+				B3354D77172675660072DB04 /* CardView.m */,
+				B3FA4EB517313E610031B5D0 /* CardData.h */,
+				B3FA4EB617313E610031B5D0 /* CardData.m */,
+			);
+			name = Elements;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +221,10 @@
 				B30AABE517252570001B52AE /* Default@2x.png in Resources */,
 				B30AABE717252570001B52AE /* Default-568h@2x.png in Resources */,
 				B30AABEA17252570001B52AE /* MainStoryboard.storyboard in Resources */,
+				B33B578C172A87E50007B041 /* circle.jpg in Resources */,
+				B33B578D172A87E50007B041 /* circle_b.png in Resources */,
+				B311116F172D037E009A98CB /* page.png in Resources */,
+				B39AE5BC17302EB50053A560 /* card.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +238,9 @@
 				B30AABDD17252570001B52AE /* main.m in Sources */,
 				B30AABE117252570001B52AE /* qsortCardAppDelegate.m in Sources */,
 				B30AABED17252570001B52AE /* qsortCardViewController.m in Sources */,
+				B3354D78172675660072DB04 /* CardView.m in Sources */,
+				B311116D172CF9BB009A98CB /* iCarousel.m in Sources */,
+				B3FA4EB717313E610031B5D0 /* CardData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +365,7 @@
 				B30AABF217252570001B52AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
