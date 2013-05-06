@@ -24,14 +24,19 @@
         [panGesture setMaximumNumberOfTouches:2];
         [self addGestureRecognizer:panGesture];
         
-        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height)];
-        self.imageView.contentMode = UIViewContentModeCenter;
         [self addSubview:self.imageView];
-
     }
     return self;
 }
 
+-(UIImageView*)imageView{
+    
+    if (_imageView == nil) {
+        _imageView = [[UIImageView alloc] initWithFrame:self.frame];
+        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    return _imageView;
+}
 #pragma mark - Touch handling
 
 //adjust anchor point also bring view to front

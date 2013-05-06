@@ -11,10 +11,10 @@
 
 @interface qsortCardViewController : UIViewController
 
-@property (nonatomic,strong) iCarousel *unsortedCardsView;
-@property (nonatomic,strong) NSMutableArray *unsortedCardsData;
-@property (nonatomic,strong) NSMutableArray *scoreBoxsData;
-@property (nonatomic,strong) NSMutableArray *scoreBoxsView;//totally three iCarousel views
+@property (nonatomic,strong) NSMutableArray *cardsDatas;
+@property (nonatomic,strong) NSMutableArray *cardsViews;
 @property (nonatomic,strong) NSMutableArray *allCards;
+@property (nonatomic,strong) NSMutableArray *labelViews;
+@property (nonatomic,strong) NSArray *labelDatas;
 
 @end

@@ -11,8 +11,11 @@
 #import "CardView.h"
 #import "CardData.h"
 #import "Constant.h"
+#import "SettingViewController.h"
 
-@interface qsortCardViewController ()<CardIsSorting,iCarouselDataSource,iCarouselDelegate>
+@interface qsortCardViewController ()<CardIsSorting,iCarouselDataSource,iCarouselDelegate,GetSettingProtocol>
+@property (nonatomic,strong) UIButton *goSettingBtn;
+@property (nonatomic,strong) UIButton *loadCardsFromFileBtn;
 @end
 
 @implementation qsortCardViewController
@@ -21,17 +24,45 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    //init datas
-    self.scoreBoxsData = [NSMutableArray array];
     
     self.view.backgroundColor = [UIColor grayColor];
-    
-    for (iCarousel* scoreBox in self.scoreBoxsView) {
-        [self.view addSubview:scoreBox];
-    }
-    [self.view addSubview:self.unsortedCardsView];
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    NSLog(@"viewDidAppear");
+
+    if ([self.cardsDatas count] == 0) {
+        //TODO:adjust loadCardsBtn frame
+        self.loadCardsFromFileBtn = [UIButton buttonWithType:UIButtonTypeInfoLight];
+        [self.loadCardsFromFileBtn  addTarget:self action:@selector(loadCardFromFile:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:self.loadCardsFromFileBtn];
+    }else{
+        //add cards
+        for (iCarousel* cards in self.cardsViews) {
+            [self.view addSubview:cards];
+            cards.delegate = self;
+            cards.dataSource = self;
+        }
+    }
+
+    if ([self.labelDatas count] == 0) {
+        self.goSettingBtn = [UIButton buttonWithType:UIButtonTypeContactAdd];
+        //TODO:adjust goSettingBtn's frame
+        [self.goSettingBtn addTarget:self action:@selector(goSettingView:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:self.goSettingBtn];
+    }else{
+        [self.goSettingBtn removeFromSuperview];
+        self.goSettingBtn = nil;
+        NSDictionary *data = [self.labelDatas objectAtIndex:0];
+        ((UILabel*)[self.labelViews objectAtIndex:0]).text = [data objectForKey:KEY_FROM];
+        ((UILabel*)[self.labelViews objectAtIndex:1]).text = @"MEDIUM";
+        ((UILabel*)[self.labelViews objectAtIndex:2]).text = [data objectForKey:KEY_TO];
+        for (UILabel *label in self.labelViews) {
+            [self.view addSubview:label];
+        }
+        
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -51,60 +82,90 @@
         NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentPath
                                                                          error:&error];
         //TODO:handle some error when loading file
-        for (NSString *file in files) {
-            //NSLog(@"file path = %@",file);
-            CardData *card = [[CardData alloc] init];
-            card.imageDataPath = [documentPath stringByAppendingPathComponent:file];
-            card.group = NOT_SORTED;
-            [_allCards addObject:card];
-            card = nil;
+        if ([files count]==0) {
+            return _allCards;
+        }else{
+            for (NSString *file in files) {
+                //NSLog(@"file path = %@",file);
+                CardData *card = [[CardData alloc] init];
+                card.imageDataPath = [documentPath stringByAppendingPathComponent:file];
+                card.group = NOT_SORTED;
+                [_allCards addObject:card];
+                card = nil;
+            }
         }
     }
     
     return _allCards;
 }
 
--(NSMutableArray*)scoreBoxsView{
+-(NSMutableArray*)cardsViews{
     
-    if (_scoreBoxsView == nil) {
+    if (_cardsViews == nil) {
+        //NSLog(@"init cardsView");
         int i;
-        _scoreBoxsView = [NSMutableArray array];
+        _cardsViews = [NSMutableArray array];
+        
+        //This is unsorted cards
+        iCarousel *cards = [[iCarousel alloc] initWithFrame:CGRectMake(0, 250, 1024, 768)];
+        cards.tag = NOT_SORTED;
+        cards.type = iCarouselTypeRotary;
+        cards.backgroundColor = [UIColor blueColor];
+        [_cardsViews addObject:cards];
+        cards = nil;
+        
         for (i=0; i<3; i++) {
-            iCarousel *scoreBoxView = [[iCarousel alloc] initWithFrame:CGRectMake(20 + i*400, 30, 180, 180)];
-            scoreBoxView.type = iCarouselTypeTimeMachine;
-            scoreBoxView.dataSource = self;
-            scoreBoxView.delegate = self;
-            scoreBoxView.backgroundColor = [UIColor blackColor];
-            scoreBoxView.tag = i;
-            [_scoreBoxsView addObject:scoreBoxView];
-            scoreBoxView = nil;
+            cards = [[iCarousel alloc] initWithFrame:CGRectMake(20 + i*400, 30, 200, 200)];
+            cards.type = iCarouselTypeTimeMachine;
+            cards.tag = i+1;
+            cards.backgroundColor = [UIColor blackColor];
+            [_cardsViews addObject:cards];
+            cards = nil;
         }
     }
-    return _scoreBoxsView;
+    return _cardsViews;
 }
 
--(iCarousel*)unsortedCardsView{
+-(NSMutableArray*)cardsDatas{
     
-    if (_unsortedCardsView == nil) {
-        _unsortedCardsView = [[iCarousel alloc] initWithFrame:CGRectMake(0, 200, 1024, 768)];
-        _unsortedCardsView.type = iCarouselTypeRotary;
-        _unsortedCardsView.delegate = self;
-        _unsortedCardsView.dataSource = self;
-        _unsortedCardsView.backgroundColor = [UIColor blueColor];
-    }
-    
-    return _unsortedCardsView;
-}
-
--(NSMutableArray*)unsortedCardsData{
-    
-    if (_unsortedCardsData == nil) {
-        _unsortedCardsData = [NSMutableArray array];
+    if (_cardsDatas == nil) {
+        _cardsDatas = [NSMutableArray array];
+        NSMutableArray *initDatas = [NSMutableArray array];
         for (CardData* cardData in self.allCards) {
-            [_unsortedCardsData addObject:cardData.imageDataPath];
+            [initDatas addObject:cardData.imageDataPath];
+        }
+        [_cardsDatas insertObject:initDatas atIndex:NOT_SORTED];
+        initDatas = nil;
+        
+        int i;
+        for (i=0; i<3; i++) {
+            initDatas = [NSMutableArray array];
+            [_cardsDatas addObject:initDatas];
         }
     }
-    return _unsortedCardsData;
+    return _cardsDatas;
+}
+
+-(NSMutableArray*)labelViews{
+    if (_labelViews == nil) {
+        _labelViews = [NSMutableArray array];
+        for (int i=0; i<3; i++) {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 50+i*200, 50, 30)];
+            [_labelViews addObject:label];
+        }
+    }
+    return _labelViews;
+}
+
+-(void)goSettingView:(id)sender{
+    SettingViewController *settingViewController = [[SettingViewController alloc] init];
+    settingViewController.settingDelegate = self;
+    settingViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:settingViewController animated:YES completion:nil];
+}
+
+-(void)loadCardFromFile:(id)sender{
+    //TODO:loadCardFromFile function
 }
 #pragma mark - CardIsSorting Delegate Function
 -(void)isMoving:(CardView *)card{
@@ -112,113 +173,99 @@
     CGRect cardPosition = [card convertRect:card.bounds toView:self.view];
     int sortedIndex = NOT_SORTED;
    
-        for (UIView *scoreBox in self.scoreBoxsView) {
-////            NSLog(@"scorebox position (x,y) = (%f, %f)",scoreBox.frame.origin.x,scoreBox.frame.origin.y);
-////            NSLog(@"card position (x,y) = (%f, %f)",card.frame.origin.x,card.frame.origin.y);
-////            NSLog(@"converted postition (x,y) = (%f, %f)",cardPosition.origin.x,cardPosition.origin.y);
-//        
-            //if overlap
-        if (CGRectIntersectsRect(scoreBox.frame, cardPosition)) {
-//            scoreBox.highlighted = YES;
-//            sortedIndex = [self.scoreBoxs indexOfObject:scoreBox];
-            break;
+    for (UIView *scoreBox in self.cardsViews) {
+        if (scoreBox.tag == NOT_SORTED) {
+            continue;
         }else{
-//            scoreBox.highlighted = NO;
+            ////            NSLog(@"scorebox position (x,y) = (%f, %f)",scoreBox.frame.origin.x,scoreBox.frame.origin.y);
+            ////            NSLog(@"card position (x,y) = (%f, %f)",card.frame.origin.x,card.frame.origin.y);
+            ////            NSLog(@"converted postition (x,y) = (%f, %f)",cardPosition.origin.x,cardPosition.origin.y);
+            //
+            //if overlap
+            if (CGRectIntersectsRect(scoreBox.frame, cardPosition)) {
+                //            scoreBox.highlighted = YES;
+                sortedIndex = scoreBox.tag;
+            }else{
+                //            scoreBox.highlighted = NO;
+            }
         }
-    }
-//    
-    if (sortedIndex != NOT_SORTED) {
-//        //card move inside box
-//        [card scaleTo:0.6];
-//        //display scorebox content
-//        //ScoreBox *scoreboxNow = [self.scoreBoxs objectAtIndex:sortedIndex];
-//        //[scoreboxNow displayCards];
-//    }else{
-//        [card scaleTo:1.0];
     }
 }
 -(void)cardMovingEnd:(CardView *)card{
     int sortedToGroup = NOT_SORTED;
     CGRect cardPosition = [card convertRect:card.bounds toView:self.view];
-//    Card *sortedCard = nil;
-//    
-//    //check overlap
-    for (UIView *scoreBox in self.scoreBoxsView) {
-//      //check overlap
+    
+    //NSLog(@"card.tag = %d",card.tag);
+    //check overlap
+    for (UIView *scoreBox in self.cardsViews) {
+        if (scoreBox.tag == NOT_SORTED) {
+            continue;
+        }
         if (CGRectIntersectsRect(scoreBox.frame, cardPosition)) {
             //assign to that group
 //            scoreBox.highlighted = NO;
-            sortedToGroup = [self.scoreBoxsView indexOfObject:scoreBox];
-//            if (card.group != NOT_SORTED) {
-//                //it was sorted before, we have to clean its old record in scorebox
-//                ScoreBox *oldScoreBox = [self.scoreBoxs objectAtIndex:card.group];
-//                [oldScoreBox.cards removeObject:card];
-//                self.unsortedCards++;
-//                oldScoreBox = nil;
-//            }else{
-//                [self removeItem];
-//                sortedCard = card;
-//                sortedCard.frame = cardPosition;
-//                sortedCard.backgroundColor = [UIColor blackColor];
-//                [self.view addSubview:sortedCard];
-//            }
-//            //NSLog(@"at group %d",sortedToGroup);
-//            card.group = sortedToGroup;
-//            [scoreBox.cards addObject:card];
-//            self.unsortedCards--;
-//            //move cards closer to pile
-//            [UIView animateWithDuration:0.25
-//                             animations:^{
-//                                 [card scaleTo:0.3];
-//                                 [card setCenter:scoreBox.center];
-//                             }
-//             ];
-//            //[scoreBox endDisplayCards];
+            sortedToGroup = scoreBox.tag;
             break;
         }
     }
-//    
-    if (sortedToGroup == NOT_SORTED) {
-        //card is not sorted
-//        //if is sorted before, clean its record, and put it back to unsorted group
-//        if (card.group != NOT_SORTED) {
-//            ScoreBox *oldScoreBox = [self.scoreBoxs objectAtIndex:card.group];
-//            [oldScoreBox.cards removeObject:card];
-//            self.unsortedCards++;
-//            oldScoreBox = nil;
-//            //[card removeFromSuperview];
-//            [self insertItem];
-//        }else{
-//            //put it back to its origin place
-//            [UIView animateWithDuration:0.25
-//                             animations:^{
-//                                 card.frame = CGRectMake([card superview].frame.origin.x, [card superview].frame.origin.y, card.frame.size.width, card.frame.size.height);
-//                             }
-//             ];
-//        }
-//        card.group = NOT_SORTED;
+
+    NSInteger cardLeft = 1;
+    if (sortedToGroup == card.tag) {
+        //do nothing
+    }else{
+        cardLeft = [self moveCard:card fromGroup:card.tag toGroup:sortedToGroup];
+        card.tag = sortedToGroup;
     }
-//    //NSLog(@"unsorted cards %d",self.unsortedCards);
+    
+    //NSLog(@"unsorted cards %d",self.unsortedCards);
     //NSLog(@"the card sorted to group %d",sortedToGroup);
-//    
-//    if (self.unsortedCards == 0) {
-//        //to second stage sorting
-//    }
+    
+    if (cardLeft == 0) {
+        //to second stage sorting
+       
+    }
 }
 
+-(NSInteger)moveCard:(CardView*)card fromGroup:(int)from toGroup:(int)to{
+    iCarousel *oldGroupView = [self.cardsViews objectAtIndex:from];
+    iCarousel *newGroupView = [self.cardsViews objectAtIndex:to];
+    
+    NSMutableArray *oldDatas = [self.cardsDatas objectAtIndex:from];
+    NSMutableArray *newDatas = [self.cardsDatas objectAtIndex:to];
+    
+    //NSLog(@"%@",[NSString stringWithFormat:@"card %d moves from %d to %d",oldGroupView.currentItemIndex,from,to]);
+    //add it to new group
+    NSInteger index = MAX(0, newGroupView.currentItemIndex);
+    NSString *imagePath = [NSString stringWithFormat:@"%@",[oldDatas objectAtIndex:oldGroupView.currentItemIndex]];
+    [newDatas insertObject:imagePath atIndex:index];
+    [newGroupView insertItemAtIndex:index animated:YES];
+    //NSLog(@"insert new item succefully");
+    
+    //remove it from old group
+    if (oldGroupView.numberOfItems > 0) {
+        NSInteger index = oldGroupView.currentItemIndex;
+        [oldGroupView removeItemAtIndex:index animated:YES];
+        [oldDatas removeObjectAtIndex:index];
+        //NSLog(@"remove item succefully");
+    }
+    
+    if (from == NOT_SORTED) {
+        return [oldDatas count];
+    }else{
+        return 1;
+    }
+
+}
 #pragma mark -
 #pragma mark iCarousel methods
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    if (carousel == self.unsortedCardsView) {
-        return [self.unsortedCardsData count];
-    }else if ([self.scoreBoxsView containsObject:carousel]){
-        NSMutableArray *scoreBoxData = [self.scoreBoxsData objectAtIndex:carousel.tag];
-        return [scoreBoxData count];
-    }else{
-        return -1;
-    }
+    NSMutableArray *carouselDatas;
+ 
+    carouselDatas = [self.cardsDatas objectAtIndex:carousel.tag];
+    return [carouselDatas count];
+
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIImageView *)view
@@ -226,29 +273,32 @@
     UILabel *label = nil;
     CardView *card = nil;
     
+    //NSLog(@"carousel number %d",carousel.tag);
     //create new view if no view is available for recycling
-    if (view == nil)
-    {
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 500.0f, 500.0f)];
-        view.image = [UIImage imageNamed:@"card.png"];
+//    if (view == nil)
+//    {
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 250.0f, 250.0f)];
+        //view.image = [UIImage imageNamed:@"card.png"];
+        view.backgroundColor = [UIColor whiteColor];
         view.contentMode = UIViewContentModeCenter;
         
         label = [[UILabel alloc] initWithFrame:view.bounds];
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
-        label.font = [label.font fontWithSize:50];
-        label.tag = 1;
+        label.font = [label.font fontWithSize:8];
+        label.tag = -1;
         [view addSubview:label];
         
-        card = [[CardView alloc] initWithFrame:CGRectMake(10, 10, 380, 380)];
+        card = [[CardView alloc] initWithFrame:CGRectMake(10, 10, 150, 150)];
         card.delegate = self;
-        card.tag = 2;
+        card.tag = carousel.tag;
         [view addSubview:card];
-    }else{
-        //get a reference to the label in the recycled view
-        label = (UILabel *)[view viewWithTag:1];
-        card = (CardView*)[view viewWithTag:2];
-    }
+//    }else{
+//        //get a reference to the label in the recycled view
+//        label = (UILabel *)[view viewWithTag:-1];
+//        card = (CardView*)[view viewWithTag:carousel.tag];
+//        card.tag = carousel.tag;
+//    }
     
     //set item label
     //remember to always set any properties of your carousel item
@@ -257,12 +307,8 @@
     //in the wrong place in the carousel
     NSMutableArray *item;
     
-    if (carousel == self.unsortedCardsView) {
-        item = [NSMutableArray arrayWithArray:self.unsortedCardsData];
-    }else if ([self.scoreBoxsView containsObject:carousel]){
-        item = [self.scoreBoxsData objectAtIndex:carousel.tag];
-    }
-    label.text = [NSString stringWithFormat:@"%d",[self.unsortedCardsData count]];
+    item = [self.cardsDatas objectAtIndex:carousel.tag];
+    label.text = [item objectAtIndex:index];
     card.imageView.image = [UIImage imageWithContentsOfFile:[item objectAtIndex:index]];
     //NSLog(@"index = %d",index);
     item = nil;
@@ -299,30 +345,14 @@
     }
 }
 
--(BOOL)carousel:(iCarousel *)carousel shouldSelectItemAtIndex:(NSInteger)index{
-    NSLog(@"begin");
-    return YES;
+#pragma mark - SettingView Controller Protocol
+-(void)settingisDone:(NSArray *)settingDatas{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    self.labelDatas = [NSArray arrayWithArray:settingDatas];
 }
--(void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index{
-    NSLog(@"end");
+
+-(void)settingisCanceled{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
-//- (void)insertItem
-//{
-//    NSInteger index = MAX(0, self.carousel.currentItemIndex);
-//    [self.items insertObject:[NSNumber numberWithInt:self.carousel.numberOfItems] atIndex:index];
-//    [self.carousel insertItemAtIndex:index animated:YES];
-//}
-//
-//- (NSInteger)removeItem
-//{
-//    if (self.carousel.numberOfItems > 0)
-//    {
-//        NSInteger index = self.carousel.currentItemIndex;
-//        [self.carousel removeItemAtIndex:index animated:YES];
-//        [self.items removeObjectAtIndex:index];
-//    }
-//    
-//    return self.carousel.numberOfItems;
-//}
 
 @end

@@ -25,6 +25,8 @@
 		B33B578D172A87E50007B041 /* circle_b.png in Resources */ = {isa = PBXBuildFile; fileRef = B33B578B172A87E50007B041 /* circle_b.png */; };
 		B39AE5BC17302EB50053A560 /* card.png in Resources */ = {isa = PBXBuildFile; fileRef = B39AE5BB17302EB50053A560 /* card.png */; };
 		B3D6CED91727EF7F0096E7F2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */; };
+		B3F1CD0B1733C0FF0013FB27 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F1CD0A1733C0FF0013FB27 /* SettingViewController.m */; };
+		B3F1CD0D1733C1290013FB27 /* SettingViewTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3F1CD0C1733C1290013FB27 /* SettingViewTableCell.xib */; };
 		B3FA4EB717313E610031B5D0 /* CardData.m in Sources */ = {isa = PBXBuildFile; fileRef = B3FA4EB617313E610031B5D0 /* CardData.m */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +57,9 @@
 		B39AE5BB17302EB50053A560 /* card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card.png; sourceTree = "<group>"; };
 		B3C7728917292344004AD718 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B3F1CD091733C0FF0013FB27 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		B3F1CD0A1733C0FF0013FB27 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		B3F1CD0C1733C1290013FB27 /* SettingViewTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewTableCell.xib; sourceTree = "<group>"; };
 		B3FA4EB517313E610031B5D0 /* CardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardData.h; sourceTree = "<group>"; };
 		B3FA4EB617313E610031B5D0 /* CardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,9 +82,10 @@
 		B30AABC41725256F001B52AE = {
 			isa = PBXGroup;
 			children = (
+				B3C7728917292344004AD718 /* Constant.h */,
+				B3F1CD081733B2750013FB27 /* Setting View */,
 				B311116A172CF9BB009A98CB /* iCarousel */,
 				B33B5789172A87D00007B041 /* Images */,
-				B3C7728917292344004AD718 /* Constant.h */,
 				B3D6CEDD1727F8420096E7F2 /* Elements */,
 				B30AABD617252570001B52AE /* qsort card */,
 				B30AABCF1725256F001B52AE /* Frameworks */,
@@ -164,6 +170,16 @@
 			name = Elements;
 			sourceTree = "<group>";
 		};
+		B3F1CD081733B2750013FB27 /* Setting View */ = {
+			isa = PBXGroup;
+			children = (
+				B3F1CD091733C0FF0013FB27 /* SettingViewController.h */,
+				B3F1CD0A1733C0FF0013FB27 /* SettingViewController.m */,
+				B3F1CD0C1733C1290013FB27 /* SettingViewTableCell.xib */,
+			);
+			name = "Setting View";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -225,6 +241,7 @@
 				B33B578D172A87E50007B041 /* circle_b.png in Resources */,
 				B311116F172D037E009A98CB /* page.png in Resources */,
 				B39AE5BC17302EB50053A560 /* card.png in Resources */,
+				B3F1CD0D1733C1290013FB27 /* SettingViewTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +258,7 @@
 				B3354D78172675660072DB04 /* CardView.m in Sources */,
 				B311116D172CF9BB009A98CB /* iCarousel.m in Sources */,
 				B3FA4EB717313E610031B5D0 /* CardData.m in Sources */,
+				B3F1CD0B1733C0FF0013FB27 /* SettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,7 +348,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "qsort card/qsort card-Prefix.pch";
 				INFOPLIST_FILE = "qsort card/qsort card-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -341,7 +361,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "qsort card/qsort card-Prefix.pch";
 				INFOPLIST_FILE = "qsort card/qsort card-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

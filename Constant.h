@@ -9,6 +9,9 @@
 #ifndef qsort_card_Constant_h
 #define qsort_card_Constant_h
 
-#define NOT_SORTED -1
+#define NOT_SORTED 0
+
+#define KEY_FROM @"FROM"
+#define KEY_TO @"TO"
 
 #endif
