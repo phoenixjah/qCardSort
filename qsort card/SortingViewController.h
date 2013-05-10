@@ -1,22 +1,19 @@
 //
-//  qsortCardViewController.h
+//  SortingViewController.h
 //  qsort card
 //
-//  Created by Chia Lin on 13/4/22.
+//  Created by Chia Lin on 13/5/6.
 //  Copyright (c) 2013年 Chia Lin. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-@class iCarousel,CardView;
+@class iCarousel;
 
-@interface qsortCardViewController : UIViewController
-
+@interface SortingViewController : UIViewController
 @property (nonatomic,strong) NSMutableArray *cardsDatas;
 @property (nonatomic,strong) NSMutableArray *cardsViews;
 @property (nonatomic,strong) NSMutableArray *allCards;
 @property (nonatomic,strong) NSMutableArray *labelViews;
 @property (nonatomic,strong) NSArray *labelDatas;
 
--(void)isMoving:(CardView*)card;
--(void)cardMovingEnd:(CardView*)card;
 @end

@@ -19,15 +19,16 @@
 		B30AABEA17252570001B52AE /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B30AABE817252570001B52AE /* MainStoryboard.storyboard */; };
 		B30AABED17252570001B52AE /* qsortCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B30AABEC17252570001B52AE /* qsortCardViewController.m */; };
 		B311116D172CF9BB009A98CB /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = B311116C172CF9BB009A98CB /* iCarousel.m */; };
-		B311116F172D037E009A98CB /* page.png in Resources */ = {isa = PBXBuildFile; fileRef = B311116E172D037E009A98CB /* page.png */; };
 		B3354D78172675660072DB04 /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3354D77172675660072DB04 /* CardView.m */; };
 		B33B578C172A87E50007B041 /* circle.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B33B578A172A87E50007B041 /* circle.jpg */; };
 		B33B578D172A87E50007B041 /* circle_b.png in Resources */ = {isa = PBXBuildFile; fileRef = B33B578B172A87E50007B041 /* circle_b.png */; };
-		B39AE5BC17302EB50053A560 /* card.png in Resources */ = {isa = PBXBuildFile; fileRef = B39AE5BB17302EB50053A560 /* card.png */; };
 		B3D6CED91727EF7F0096E7F2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */; };
 		B3F1CD0B1733C0FF0013FB27 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F1CD0A1733C0FF0013FB27 /* SettingViewController.m */; };
 		B3F1CD0D1733C1290013FB27 /* SettingViewTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3F1CD0C1733C1290013FB27 /* SettingViewTableCell.xib */; };
+		B3F276A11737DC6100B3613C /* SecondQsortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F276A01737DC6100B3613C /* SecondQsortViewController.m */; };
 		B3FA4EB717313E610031B5D0 /* CardData.m in Sources */ = {isa = PBXBuildFile; fileRef = B3FA4EB617313E610031B5D0 /* CardData.m */; };
+		B3FF1A7D17388DB600EA6854 /* card.png in Resources */ = {isa = PBXBuildFile; fileRef = B3FF1A7C17388DB600EA6854 /* card.png */; };
+		B3FF1A7F173898CC00EA6854 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = B3FF1A7E173898CC00EA6854 /* background.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,19 +50,21 @@
 		B30AABEC17252570001B52AE /* qsortCardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = qsortCardViewController.m; sourceTree = "<group>"; };
 		B311116B172CF9BB009A98CB /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		B311116C172CF9BB009A98CB /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
-		B311116E172D037E009A98CB /* page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page.png; sourceTree = "<group>"; };
 		B3354D76172675660072DB04 /* CardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardView.h; sourceTree = "<group>"; };
 		B3354D77172675660072DB04 /* CardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardView.m; sourceTree = "<group>"; };
 		B33B578A172A87E50007B041 /* circle.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = circle.jpg; sourceTree = "<group>"; };
 		B33B578B172A87E50007B041 /* circle_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle_b.png; sourceTree = "<group>"; };
-		B39AE5BB17302EB50053A560 /* card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card.png; sourceTree = "<group>"; };
 		B3C7728917292344004AD718 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B3F1CD091733C0FF0013FB27 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		B3F1CD0A1733C0FF0013FB27 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		B3F1CD0C1733C1290013FB27 /* SettingViewTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewTableCell.xib; sourceTree = "<group>"; };
+		B3F2769F1737DC6100B3613C /* SecondQsortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondQsortViewController.h; sourceTree = "<group>"; };
+		B3F276A01737DC6100B3613C /* SecondQsortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondQsortViewController.m; sourceTree = "<group>"; };
 		B3FA4EB517313E610031B5D0 /* CardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardData.h; sourceTree = "<group>"; };
 		B3FA4EB617313E610031B5D0 /* CardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardData.m; sourceTree = "<group>"; };
+		B3FF1A7C17388DB600EA6854 /* card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card.png; sourceTree = "<group>"; };
+		B3FF1A7E173898CC00EA6854 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,8 @@
 				B30AABE817252570001B52AE /* MainStoryboard.storyboard */,
 				B30AABEB17252570001B52AE /* qsortCardViewController.h */,
 				B30AABEC17252570001B52AE /* qsortCardViewController.m */,
+				B3F2769F1737DC6100B3613C /* SecondQsortViewController.h */,
+				B3F276A01737DC6100B3613C /* SecondQsortViewController.m */,
 				B30AABD717252570001B52AE /* Supporting Files */,
 			);
 			path = "qsort card";
@@ -151,8 +156,8 @@
 		B33B5789172A87D00007B041 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				B39AE5BB17302EB50053A560 /* card.png */,
-				B311116E172D037E009A98CB /* page.png */,
+				B3FF1A7E173898CC00EA6854 /* background.png */,
+				B3FF1A7C17388DB600EA6854 /* card.png */,
 				B33B578A172A87E50007B041 /* circle.jpg */,
 				B33B578B172A87E50007B041 /* circle_b.png */,
 			);
@@ -239,9 +244,9 @@
 				B30AABEA17252570001B52AE /* MainStoryboard.storyboard in Resources */,
 				B33B578C172A87E50007B041 /* circle.jpg in Resources */,
 				B33B578D172A87E50007B041 /* circle_b.png in Resources */,
-				B311116F172D037E009A98CB /* page.png in Resources */,
-				B39AE5BC17302EB50053A560 /* card.png in Resources */,
 				B3F1CD0D1733C1290013FB27 /* SettingViewTableCell.xib in Resources */,
+				B3FF1A7D17388DB600EA6854 /* card.png in Resources */,
+				B3FF1A7F173898CC00EA6854 /* background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +264,7 @@
 				B311116D172CF9BB009A98CB /* iCarousel.m in Sources */,
 				B3FA4EB717313E610031B5D0 /* CardData.m in Sources */,
 				B3F1CD0B1733C0FF0013FB27 /* SettingViewController.m in Sources */,
+				B3F276A11737DC6100B3613C /* SecondQsortViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

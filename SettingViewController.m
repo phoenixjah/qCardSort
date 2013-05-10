@@ -118,8 +118,9 @@
 
 -(UIButton*)editCellBtn{
     if (_editCellBtn == nil) {
-        _editCellBtn = [UIButton buttonWithType:UIButtonTypeInfoDark];
-        _editCellBtn.frame = CGRectMake(300, 20, 20, 20);
+        _editCellBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        _editCellBtn.frame = CGRectMake(500, 20, 100, 20);
+        [_editCellBtn setTitle:@"Edit" forState:UIControlStateNormal];
         [_editCellBtn addTarget:self action:@selector(setCellEditable:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _editCellBtn;
@@ -128,7 +129,8 @@
 -(UIButton*)goBtn{
     if (_goBtn == nil) {
         _goBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _goBtn.frame = CGRectMake(300, 300, 50, 50);
+        _goBtn.frame = CGRectMake(500, 300, 100, 50);
+        [_goBtn setTitle:@"Go" forState:UIControlStateNormal];
         _goBtn.userInteractionEnabled = NO;
         [_goBtn addTarget:self action:@selector(startSorting:) forControlEvents:UIControlEventTouchUpInside];
     }
