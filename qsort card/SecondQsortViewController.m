@@ -10,11 +10,12 @@
 #import "iCarousel.h"
 #import "CardView.h"
 #import "CardData.h"
+#import <MessageUI/MessageUI.h>
 
 #define NOT_SORTED 3
-@interface SecondQsortViewController ()<CardIsSorting,iCarouselDataSource,iCarouselDelegate>
-@property (nonatomic,strong) UIScrollView *unsortedGroup;
-@property (nonatomic,strong) iCarousel *sortedGroup;
+@interface SecondQsortViewController ()<CardIsSorting,iCarouselDataSource,iCarouselDelegate,MFMailComposeViewControllerDelegate>
+@property (nonatomic,strong) UIScrollView *scrollView;
+@property (nonatomic,strong) UIPageControl *pageControl;
 @end
 
 @implementation SecondQsortViewController
@@ -23,7 +24,17 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 300, 20, 100)];
+    [self.view addSubview:self.pageControl];
+    self.pageControl.numberOfPages = 3;
+    self.pageControl.currentPage = 1;
+    self.pageControl.backgroundColor = [UIColor blackColor];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+    self.scrollView.contentSize = CGSizeMake(1024, 768*3);
+    self.scrollView.pagingEnabled = YES;
+    [self.scrollView setContentOffset:CGPointMake(0, 768)];
+    [self.view addSubview:self.scrollView];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -52,55 +63,36 @@
  
 }
 
--(void)setupViews{
-
-    self.unsortedGroup = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 500, 768)];
-    self.unsortedGroup.contentSize = CGSizeMake(500, 768*3);
-    self.unsortedGroup.pagingEnabled = YES;
-    self.unsortedGroup.backgroundColor = [UIColor yellowColor];
-    [self.view addSubview:self.unsortedGroup];
-
- 
+-(void)setupViews{ 
     //first three cardViews are unsorted
     self.cardsViews = [NSMutableArray array];
     for (int i = 0; i<3; i++) {
-        iCarousel *carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, i*768, 500, 600)];
-        carousel.type = iCarouselTypeRotary;
-        carousel.backgroundColor = [UIColor cyanColor];
+        iCarousel *carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 30 + i*768, 300, 600)];
+        carousel.type = iCarouselTypeWheel;
+        //carousel.backgroundColor = [UIColor cyanColor];
         carousel.tag = i;
         carousel.delegate = self;
         carousel.dataSource = self;
         carousel.vertical = YES;
-        //cards.backgroundColor = [UIColor blueColor];
-        carousel.contentOffset = CGSizeMake(-400, 0);
-        carousel.viewpointOffset = CGSizeMake(-300,0);
+        //carousel.backgroundColor = [UIColor blueColor];
 
         [self.cardsViews addObject:carousel];
     }
     
     for (int i=0; i<9; i++) {
-        iCarousel *carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 0, 500, 150)];
+        iCarousel *carousel = [[iCarousel alloc] initWithFrame:CGRectMake(600, 30+i*250, 500, 100)];
         carousel.type = iCarouselTypeInvertedTimeMachine;
         carousel.tag = NOT_SORTED + i;
         carousel.delegate = self;
         carousel.dataSource = self;
-        carousel.backgroundColor = [UIColor blackColor];
+        carousel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1+0.15*i];
         [self.cardsViews addObject:carousel];
 
     }
-    self.sortedGroup = [[iCarousel alloc] initWithFrame:CGRectMake(500, 0, 600, 768)];
-    self.sortedGroup.type = iCarouselTypeLinear;
-    self.sortedGroup.vertical = YES;
-    self.sortedGroup.delegate = self;
-    self.sortedGroup.dataSource = self;
-    self.sortedGroup.backgroundColor = [UIColor redColor];
-    self.sortedGroup.centerItemWhenSelected = NO;
-    [self.view addSubview:self.sortedGroup];
-
-    for (int i=0; i<NOT_SORTED; i++) {
-        [self.unsortedGroup addSubview:[self.cardsViews objectAtIndex:i]];
+    for (iCarousel *cards in self.cardsViews) {
+        [self.scrollView addSubview:cards];
     }
-    //TODO: setup labelViews
+        //TODO: setup labelViews
 }
 
 #pragma mark - CardIsSorting Delegate Function
@@ -109,43 +101,60 @@
     CGRect cardPosition = [card convertRect:card.bounds toView:self.view];
     int sortedIndex = 0;
     
-    [self.view bringSubviewToFront:[self.cardsViews objectAtIndex:card.tag]];
-    if (cardPosition.origin.x + card.frame.size.width > 512) {
-        card.transform = CGAffineTransformMakeScale(0.7f, 0.7f);
+    [self.scrollView bringSubviewToFront:[self.cardsViews objectAtIndex:card.tag]];
+    if (cardPosition.origin.x > 400 && card.tag < NOT_SORTED) {
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             card.transform = CGAffineTransformMakeScale(0.6f, 0.6f);
+                         }
+         ];
+    }else if(cardPosition.origin.x < 400 && card.tag > NOT_SORTED){
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             card.transform = CGAffineTransformMakeScale(1.0/0.6, 1.0/0.6);
+                         }
+         ];
     }else{
-        card.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             card.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                         }
+         ];
     }
-    for (UIView *scoreBox in self.cardsViews) {
-        if (scoreBox.tag < NOT_SORTED) {
-            continue;
-        }else{
-            ////            NSLog(@"scorebox position (x,y) = (%f, %f)",scoreBox.frame.origin.x,scoreBox.frame.origin.y);
-            ////            NSLog(@"card position (x,y) = (%f, %f)",card.frame.origin.x,card.frame.origin.y);
-            ////            NSLog(@"converted postition (x,y) = (%f, %f)",cardPosition.origin.x,cardPosition.origin.y);
-            //
+
+//    NSArray *nowOnDisplay = [self.sortedGroup indexesForVisibleItems];
+//    for (NSNumber *i in nowOnDisplay) {
+//        NSLog(@"visible index = %d",i.integerValue);
+//    }
+    for (int i = NOT_SORTED;i<[self.cardsViews count];i++) {
+        iCarousel *scoreBox = [self.cardsViews objectAtIndex:i];
+        CGRect boxPosition = [scoreBox convertRect:scoreBox.bounds toView:self.view];
+//        NSLog(@"scorebox position (x,y) = (%f, %f)",boxPosition.origin.x,boxPosition.origin.y);
+//        NSLog(@"card position (x,y) = (%f, %f)",card.frame.origin.x,card.frame.origin.y);
+//        NSLog(@"converted postition (x,y) = (%f, %f)",cardPosition.origin.x,cardPosition.origin.y);
+        
             //if overlap
-            if (CGRectIntersectsRect(scoreBox.frame, cardPosition)) {
-                            scoreBox.backgroundColor = [UIColor blueColor];
+        //TODO: change the highlight image
+            if (CGRectIntersectsRect(boxPosition, cardPosition)) {
+                            scoreBox.backgroundColor = [UIColor lightGrayColor];
                 sortedIndex = scoreBox.tag;
             }else{
-                            scoreBox.backgroundColor = [UIColor blueColor];
+                            scoreBox.backgroundColor = [UIColor whiteColor];
             }
-        }
+        
     }
 }
 -(void)cardMovingEnd:(CardView *)card{
-    int sortedToGroup = 0;
+    int sortedToGroup = card.tag;
     CGRect cardPosition = [card convertRect:card.bounds toView:self.view];
     
     //NSLog(@"card.tag = %d",card.tag);
     //check overlap
     for (UIView *scoreBox in self.cardsViews) {
-        if (scoreBox.tag < NOT_SORTED) {
-            continue;
-        }
-        if (CGRectIntersectsRect(scoreBox.frame, cardPosition)) {
+        CGRect boxPosition = [scoreBox convertRect:scoreBox.bounds toView:self.view];
+        if (CGRectIntersectsRect(boxPosition, cardPosition)) {
             //assign to that group
-            //            scoreBox.highlighted = NO;
+            scoreBox.backgroundColor = [UIColor lightGrayColor];
             sortedToGroup = scoreBox.tag;
             break;
         }
@@ -154,7 +163,11 @@
     NSInteger cardLeft = 1;
     if (sortedToGroup == card.tag) {
         //put it back to its origin position
-        card.frame = [card superview].frame;
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             card.frame = [card superview].frame;
+                         }
+         ];
     }else{
         cardLeft = [self moveCard:card fromGroup:card.tag toGroup:sortedToGroup];
         card.tag = sortedToGroup;
@@ -165,6 +178,17 @@
     
     if (cardLeft == 0) {
         //TODO:fuck I finished!!
+        UIButton *emailBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        emailBtn.frame = CGRectMake(250, 500, 100, 50);
+        [emailBtn setTitle:@"E-Mail" forState:UIControlStateNormal];
+        [emailBtn addTarget:self action:@selector(sendMail:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:emailBtn];
+        
+        UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        nextBtn.frame = CGRectMake(250, 600, 100, 50);
+        [nextBtn setTitle:@"To Next" forState:UIControlStateNormal];
+        [nextBtn addTarget:self action:@selector(toNext:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:nextBtn];
     }
 }
 
@@ -195,8 +219,12 @@
         //NSLog(@"remove item succefully");
     }
     //TODO:counts how many cards left unsorted
-    if (from == NOT_SORTED) {
-        return [oldDatas count];
+    if (from < NOT_SORTED) {
+        NSInteger lefts = 0;
+        for (int i = 0; i<NOT_SORTED; i++) {
+            lefts = lefts + [[self.cardsDatas objectAtIndex:i] count];
+        }
+        return lefts;
     }else{
         return 1;
     }
@@ -207,9 +235,6 @@
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    if (carousel == self.sortedGroup){
-        return 9;
-    }else{
         NSMutableArray *carouselDatas;
 //        NSLog(@"carousel %d",carousel.tag);
 //        for (NSString *path in carouselDatas) {
@@ -217,8 +242,6 @@
 //        }
         carouselDatas = [self.cardsDatas objectAtIndex:carousel.tag];
         return [carouselDatas count];
-    }
-    
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
@@ -227,18 +250,18 @@
     UILabel *label = nil;
     CardView *card = nil;
     
-    if (carousel == self.sortedGroup) {
-        //NSLog(@"index %d",index);
-        //configure inner view
-        view = [self.cardsViews objectAtIndex:index + NOT_SORTED];
-    }else{
+
     //NSLog(@"carousel number %d",carousel.tag);
     //create new view if no view is available for recycling
     //    if (view == nil)
     //    {
-    view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 250.0f, 250.0f)];
+    if (carousel.type == iCarouselTypeInvertedTimeMachine) {
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 180.0f, 180.0f)];
+    }else{
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300.0f, 300.0f)];
+    }
     //view.image = [UIImage imageNamed:@"card.png"];
-    //view.backgroundColor = [UIColor whiteColor];
+    view.backgroundColor = [UIColor blackColor];
     view.contentMode = UIViewContentModeCenter;
     
     label = [[UILabel alloc] initWithFrame:view.bounds];
@@ -248,13 +271,10 @@
     label.tag = -1;
     [view addSubview:label];
     
-    card = [[CardView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)];
+    card = [[CardView alloc] initWithFrame:view.frame];
     card.delegate = self;
     card.tag = carousel.tag;
-    if (carousel.type == iCarouselTypeInvertedTimeMachine) {
-        card.transform = CGAffineTransformMakeScale(0.7f, 0.7f);
-        card.frame = view.frame;
-    }
+    
     [view addSubview:card];
     //    }else{
     //        //get a reference to the label in the recycled view
@@ -277,7 +297,7 @@
     label.text = [NSString stringWithFormat:@"index %d",index];
     card.imageView.image = [UIImage imageWithContentsOfFile:[item objectAtIndex:index]];
     //NSLog(@"index = %d",index);
-    }
+
     return view;
 }
 
@@ -295,28 +315,37 @@
         case iCarouselOptionSpacing:
         {
             //add a bit of spacing between the item views
-            if (_carousel.type == iCarouselTypeRotary) {
-                return value;
-            }else if (_carousel.type == iCarouselTypeLinear){
-                return value*1.5;
+            if (_carousel.type == iCarouselTypeInvertedTimeMachine) {
+                return 0.2;
             }else{
-                return 0.0f;
+                return value*0.7;
             }
         }
         case iCarouselOptionArc:{
-            return value;
-        }
-        case iCarouselOptionFadeMax:
-        {
-            return value;
+            return value*0.6;
         }
         case iCarouselOptionRadius:
         {
-            return value*1.25f;
+            return value*2;
         }
         case iCarouselOptionTilt:{
-            return value*2.25f;
+            return value*1.2;
         }
+        case iCarouselOptionFadeMin:{
+            if (_carousel.type == iCarouselTypeWheel) {
+                return -0.2;
+            }
+        }
+        case iCarouselOptionFadeMax:
+            if (_carousel.type == iCarouselTypeWheel) {
+                return 0.2;
+            }
+        case iCarouselOptionFadeRange:
+            if (_carousel.type == iCarouselTypeWheel) {
+                return 2;
+            }
+            //        case iCarouselOptionAngle:
+            //            return value*0.8;
         default:
         {
             return value;
@@ -324,4 +353,57 @@
     }
 }
 
+-(BOOL)carousel:(iCarousel *)carousel shouldSelectItemAtIndex:(NSInteger)index{
+    if (index != carousel.currentItemIndex) {
+        [carousel scrollToItemAtIndex:index animated:YES];
+    }
+    //NSLog(@"index = %d",index);
+    return NO;
+}
+#pragma mark - End Sorting
+-(void)sendMail:(UIButton*)btn{
+    // Email Subject
+    NSString *emailTitle = @"Test Email";
+    // Email Content
+    NSString *messageBody = @"iOS programming is so fun!";
+    // To address
+    NSArray *toRecipents = [NSArray arrayWithObject:@"support@appcoda.com"];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setMessageBody:messageBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:NULL];
+    
+}
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            break;
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+-(void)toNext:(UIButton*)btn{
+}
 @end

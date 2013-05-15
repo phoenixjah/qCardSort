@@ -18,8 +18,9 @@
     if (self) {
         // Initialization code
         // Add gesture recognizer
-        UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card.png"]];
+        UIImageView *background = [[UIImageView alloc] initWithFrame:frame];
         background.contentMode = UIViewContentModeScaleAspectFit;
+        background.image = [UIImage imageNamed:@"card.png"];
         [self addSubview:background];
 
         UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panPiece:)];
@@ -35,7 +36,7 @@
 -(UIImageView*)imageView{
     
     if (_imageView == nil) {
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 30, self.frame.size.width-20, self.frame.size.height-20)];
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, self.frame.size.width-10, self.frame.size.height-10)];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _imageView;

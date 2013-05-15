@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B3038AE717433EF30094E4DA /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3038AE617433EF30094E4DA /* MessageUI.framework */; };
 		B30AABD117252570001B52AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30AABD01725256F001B52AE /* UIKit.framework */; };
 		B30AABD317252570001B52AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30AABD217252570001B52AE /* Foundation.framework */; };
 		B30AABD517252570001B52AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30AABD417252570001B52AE /* CoreGraphics.framework */; };
@@ -20,18 +21,21 @@
 		B30AABED17252570001B52AE /* qsortCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B30AABEC17252570001B52AE /* qsortCardViewController.m */; };
 		B311116D172CF9BB009A98CB /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = B311116C172CF9BB009A98CB /* iCarousel.m */; };
 		B3354D78172675660072DB04 /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3354D77172675660072DB04 /* CardView.m */; };
-		B33B578C172A87E50007B041 /* circle.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B33B578A172A87E50007B041 /* circle.jpg */; };
-		B33B578D172A87E50007B041 /* circle_b.png in Resources */ = {isa = PBXBuildFile; fileRef = B33B578B172A87E50007B041 /* circle_b.png */; };
+		B3CBB9CA1741DB49002B7CB7 /* card.png in Resources */ = {isa = PBXBuildFile; fileRef = B3CBB9C91741DB48002B7CB7 /* card.png */; };
+		B3CBB9CE1741DF5A002B7CB7 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = B3CBB9CD1741DF5A002B7CB7 /* background.png */; };
+		B3CBB9D01741E7C4002B7CB7 /* Candara.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B3CBB9CF1741E7C4002B7CB7 /* Candara.ttf */; };
 		B3D6CED91727EF7F0096E7F2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */; };
 		B3F1CD0B1733C0FF0013FB27 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F1CD0A1733C0FF0013FB27 /* SettingViewController.m */; };
 		B3F1CD0D1733C1290013FB27 /* SettingViewTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3F1CD0C1733C1290013FB27 /* SettingViewTableCell.xib */; };
 		B3F276A11737DC6100B3613C /* SecondQsortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F276A01737DC6100B3613C /* SecondQsortViewController.m */; };
 		B3FA4EB717313E610031B5D0 /* CardData.m in Sources */ = {isa = PBXBuildFile; fileRef = B3FA4EB617313E610031B5D0 /* CardData.m */; };
-		B3FF1A7D17388DB600EA6854 /* card.png in Resources */ = {isa = PBXBuildFile; fileRef = B3FF1A7C17388DB600EA6854 /* card.png */; };
-		B3FF1A7F173898CC00EA6854 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = B3FF1A7E173898CC00EA6854 /* background.png */; };
+		B3FD8A8D17421989008F1689 /* labels_01.png in Resources */ = {isa = PBXBuildFile; fileRef = B3FD8A8A17421989008F1689 /* labels_01.png */; };
+		B3FD8A8E17421989008F1689 /* labels_04.png in Resources */ = {isa = PBXBuildFile; fileRef = B3FD8A8B17421989008F1689 /* labels_04.png */; };
+		B3FD8A8F17421989008F1689 /* labels_07.png in Resources */ = {isa = PBXBuildFile; fileRef = B3FD8A8C17421989008F1689 /* labels_07.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B3038AE617433EF30094E4DA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		B30AABCD1725256F001B52AE /* qsort card.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "qsort card.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B30AABD01725256F001B52AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B30AABD217252570001B52AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -52,9 +56,10 @@
 		B311116C172CF9BB009A98CB /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		B3354D76172675660072DB04 /* CardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardView.h; sourceTree = "<group>"; };
 		B3354D77172675660072DB04 /* CardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardView.m; sourceTree = "<group>"; };
-		B33B578A172A87E50007B041 /* circle.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = circle.jpg; sourceTree = "<group>"; };
-		B33B578B172A87E50007B041 /* circle_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle_b.png; sourceTree = "<group>"; };
 		B3C7728917292344004AD718 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
+		B3CBB9C91741DB48002B7CB7 /* card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card.png; sourceTree = "<group>"; };
+		B3CBB9CD1741DF5A002B7CB7 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		B3CBB9CF1741E7C4002B7CB7 /* Candara.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Candara.ttf; sourceTree = "<group>"; };
 		B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B3F1CD091733C0FF0013FB27 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		B3F1CD0A1733C0FF0013FB27 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
@@ -63,8 +68,9 @@
 		B3F276A01737DC6100B3613C /* SecondQsortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondQsortViewController.m; sourceTree = "<group>"; };
 		B3FA4EB517313E610031B5D0 /* CardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardData.h; sourceTree = "<group>"; };
 		B3FA4EB617313E610031B5D0 /* CardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardData.m; sourceTree = "<group>"; };
-		B3FF1A7C17388DB600EA6854 /* card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card.png; sourceTree = "<group>"; };
-		B3FF1A7E173898CC00EA6854 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		B3FD8A8A17421989008F1689 /* labels_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labels_01.png; sourceTree = "<group>"; };
+		B3FD8A8B17421989008F1689 /* labels_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labels_04.png; sourceTree = "<group>"; };
+		B3FD8A8C17421989008F1689 /* labels_07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labels_07.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3038AE717433EF30094E4DA /* MessageUI.framework in Frameworks */,
 				B3D6CED91727EF7F0096E7F2 /* QuartzCore.framework in Frameworks */,
 				B30AABD117252570001B52AE /* UIKit.framework in Frameworks */,
 				B30AABD317252570001B52AE /* Foundation.framework in Frameworks */,
@@ -107,6 +114,7 @@
 		B30AABCF1725256F001B52AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B3038AE617433EF30094E4DA /* MessageUI.framework */,
 				B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */,
 				B30AABD01725256F001B52AE /* UIKit.framework */,
 				B30AABD217252570001B52AE /* Foundation.framework */,
@@ -133,6 +141,7 @@
 		B30AABD717252570001B52AE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B3CBB9CF1741E7C4002B7CB7 /* Candara.ttf */,
 				B30AABD817252570001B52AE /* qsort card-Info.plist */,
 				B30AABD917252570001B52AE /* InfoPlist.strings */,
 				B30AABDC17252570001B52AE /* main.m */,
@@ -156,10 +165,11 @@
 		B33B5789172A87D00007B041 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				B3FF1A7E173898CC00EA6854 /* background.png */,
-				B3FF1A7C17388DB600EA6854 /* card.png */,
-				B33B578A172A87E50007B041 /* circle.jpg */,
-				B33B578B172A87E50007B041 /* circle_b.png */,
+				B3FD8A8A17421989008F1689 /* labels_01.png */,
+				B3FD8A8B17421989008F1689 /* labels_04.png */,
+				B3FD8A8C17421989008F1689 /* labels_07.png */,
+				B3CBB9CD1741DF5A002B7CB7 /* background.png */,
+				B3CBB9C91741DB48002B7CB7 /* card.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -242,11 +252,13 @@
 				B30AABE517252570001B52AE /* Default@2x.png in Resources */,
 				B30AABE717252570001B52AE /* Default-568h@2x.png in Resources */,
 				B30AABEA17252570001B52AE /* MainStoryboard.storyboard in Resources */,
-				B33B578C172A87E50007B041 /* circle.jpg in Resources */,
-				B33B578D172A87E50007B041 /* circle_b.png in Resources */,
 				B3F1CD0D1733C1290013FB27 /* SettingViewTableCell.xib in Resources */,
-				B3FF1A7D17388DB600EA6854 /* card.png in Resources */,
-				B3FF1A7F173898CC00EA6854 /* background.png in Resources */,
+				B3CBB9CA1741DB49002B7CB7 /* card.png in Resources */,
+				B3CBB9CE1741DF5A002B7CB7 /* background.png in Resources */,
+				B3CBB9D01741E7C4002B7CB7 /* Candara.ttf in Resources */,
+				B3FD8A8D17421989008F1689 /* labels_01.png in Resources */,
+				B3FD8A8E17421989008F1689 /* labels_04.png in Resources */,
+				B3FD8A8F17421989008F1689 /* labels_07.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

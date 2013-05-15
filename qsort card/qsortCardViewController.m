@@ -25,7 +25,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 }
 
@@ -55,17 +54,16 @@
         [self.goSettingBtn addTarget:self action:@selector(goSettingView:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.goSettingBtn];
     }else{
-        [self.goSettingBtn removeFromSuperview];
-        self.goSettingBtn = nil;
+        self.goSettingBtn.frame = CGRectMake(900, 600, 100, 50);
         NSDictionary *data = [self.labelDatas objectAtIndex:0];
         ((UILabel*)[self.labelViews objectAtIndex:0]).text = [data objectForKey:KEY_FROM];
-        ((UILabel*)[self.labelViews objectAtIndex:1]).text = @"MEDIUM";
+        ((UILabel*)[self.labelViews objectAtIndex:1]).text = @"Medium";
         ((UILabel*)[self.labelViews objectAtIndex:2]).text = [data objectForKey:KEY_TO];
         for (UILabel *label in self.labelViews) {
             [self.view addSubview:label];
         }
         iCarousel *unsortedCards = [self.cardsViews objectAtIndex:NOT_SORTED];
-        [unsortedCards scrollByNumberOfItems:3 duration:1.25];
+        [unsortedCards scrollByNumberOfItems:unsortedCards.numberOfItems-1 duration:1.25];
         
     }
 }
@@ -114,19 +112,19 @@
         //This is unsorted cards
         iCarousel *cards = [[iCarousel alloc] initWithFrame:CGRectMake(0, 0,500, 768)];
         cards.tag = NOT_SORTED;
-        cards.type = iCarouselTypeRotary;
+        cards.type = iCarouselTypeWheel;
         cards.vertical = YES;
         //cards.backgroundColor = [UIColor blueColor];
-        cards.contentOffset = CGSizeMake(-400, 0);
-        cards.viewpointOffset = CGSizeMake(-300,0);
+        //cards.contentOffset = CGSizeMake(-300, 0);
+        //cards.viewpointOffset = CGSizeMake(-300,0);
         [_cardsViews addObject:cards];
         
         for (i=0; i<3; i++) {
-            cards = [[iCarousel alloc] initWithFrame:CGRectMake(550, 25+i*250, 500, 200)];
+            cards = [[iCarousel alloc] initWithFrame:CGRectMake(650, 125+i*250, 500, 100)];
             cards.type = iCarouselTypeInvertedTimeMachine;
             cards.contentOffset = CGSizeMake(-80, 0);
             cards.tag = i+1;
-            cards.backgroundColor = [UIColor blackColor];
+            cards.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1+0.3*i];
             [_cardsViews addObject:cards];
         }
     }
@@ -156,9 +154,25 @@
     if (_labelViews == nil) {
         _labelViews = [NSMutableArray array];
         for (int i=0; i<3; i++) {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(500, 50+i*250, 100, 30)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(515, 90+i*250, 141, 50)];
+            label.textAlignment = NSTextAlignmentCenter;
+            //TODO:set font
+            //[label setFont:[UIFont fontWithName:@"Candara" size:25.0f]];
             [_labelViews addObject:label];
         }
+       
+//        UILabel *firstLabel = [_labelViews objectAtIndex:0];
+//        firstLabel.textColor = [UIColor colorWithRed:88.0/255.0 green:189.0/255.0 blue:236.0/255.0 alpha:1];
+//        firstLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"labels_01.png"]];
+//        firstLabel = nil;
+//        UILabel *secondLabel = [_labelViews objectAtIndex:1];
+//        secondLabel.textColor = [UIColor colorWithRed:128.0/255.0 green:182.0/255.0 blue:183.0/255.0 alpha:1];
+//        secondLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"labels_04.png"]];
+//        secondLabel = nil;
+//        UILabel *thirdLabel = [_labelViews objectAtIndex:2];
+//        thirdLabel.textColor = [UIColor colorWithRed:91.0/255.0 green:91.0/255.0 blue:96.0/255.0 alpha:1];
+//        thirdLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"labels_07.png"]];
+//        thirdLabel = nil;
     }
     return _labelViews;
 }
@@ -180,10 +194,24 @@
     int sortedIndex = NOT_SORTED;
    
     [self.view bringSubviewToFront:[self.cardsViews objectAtIndex:card.tag]];
-    if (cardPosition.origin.x + card.frame.size.width > 512) {
-        card.transform = CGAffineTransformMakeScale(0.7f, 0.7f);
+    if (cardPosition.origin.x > 400 && card.tag == NOT_SORTED) {
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             card.transform = CGAffineTransformMakeScale(0.6f, 0.6f);
+                         }
+         ];
+    }else if(cardPosition.origin.x < 400 && card.tag != NOT_SORTED){
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             card.transform = CGAffineTransformMakeScale(1.0/0.6, 1.0/0.6);
+                         }
+         ];
     }else{
-        card.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             card.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                         }
+         ];
     }
     for (UIView *scoreBox in self.cardsViews) {
         if (scoreBox.tag == NOT_SORTED) {
@@ -196,7 +224,7 @@
             //if overlap
             if (CGRectIntersectsRect(scoreBox.frame, cardPosition)) {
                 //TODO:scoreBox hilight image
-                            scoreBox.backgroundColor = [UIColor blueColor];
+                            scoreBox.backgroundColor = [UIColor lightGrayColor];
                 sortedIndex = scoreBox.tag;
             }else{
                             scoreBox.backgroundColor = [UIColor blackColor];
@@ -205,7 +233,7 @@
     }
 }
 -(void)cardMovingEnd:(CardView *)card{
-    int sortedToGroup = NOT_SORTED;
+    int sortedToGroup = card.tag;
     CGRect cardPosition = [card convertRect:card.bounds toView:self.view];
     
     //NSLog(@"card.tag = %d",card.tag);
@@ -226,7 +254,11 @@
     NSInteger cardLeft = 1;
     if (sortedToGroup == card.tag) {
         //put it back to its origin position
-        card.frame = [card superview].frame;
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             card.frame = [card superview].frame;
+                         }
+         ];
     }else{
         cardLeft = [self moveCard:card fromGroup:card.tag toGroup:sortedToGroup];
         card.tag = sortedToGroup;
@@ -244,17 +276,19 @@
 
     if (cardLeft == 0) {
         //TODO:to second sorting
-        SecondQsortViewController *newViewController = [[SecondQsortViewController alloc] init];
         [self.cardsDatas removeObjectAtIndex:0];
-        [newViewController setUpDatas:self.cardsDatas label:self.labelDatas];
-        [self presentViewController:newViewController animated:NO completion:nil];
-//        for (int i=0;i<[self.cardsDatas count];i++) {
-//            NSMutableArray *data = [self.cardsDatas objectAtIndex:i];
-//            for (NSString *path in data) {
-//                NSLog(@"carousel %d, cardDataPath = %@",i,path);
-//            }
-//        }
-
+        [UIView animateWithDuration:1.5
+                         animations:^{
+                             for (UIView *cards in self.cardsViews) {
+                                 cards.transform = CGAffineTransformMakeTranslation(500, 0);
+                             }
+                         }
+                         completion:^(BOOL finished){
+                             SecondQsortViewController *newViewController = [[SecondQsortViewController alloc] init];
+                             [newViewController setUpDatas:self.cardsDatas label:self.labelDatas];
+                             [self.navigationController pushViewController:newViewController animated:YES];
+                         }
+         ];
     }
     
 }
@@ -315,9 +349,13 @@
     //create new view if no view is available for recycling
 //    if (view == nil)
 //    {
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 250.0f, 250.0f)];
+    if (carousel.type == iCarouselTypeInvertedTimeMachine) {
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 180.0f, 180.0f)];
+    }else{
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300.0f, 300.0f)];
+    }
         //view.image = [UIImage imageNamed:@"card.png"];
-        //view.backgroundColor = [UIColor whiteColor];
+        view.backgroundColor = [UIColor blackColor];
         view.contentMode = UIViewContentModeCenter;
         
         label = [[UILabel alloc] initWithFrame:view.bounds];
@@ -327,13 +365,13 @@
         label.tag = -1;
         [view addSubview:label];
         
-        card = [[CardView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)];
+        card = [[CardView alloc] initWithFrame:view.frame];
         card.delegate = self;
         card.tag = carousel.tag;
-    if (carousel.type == iCarouselTypeInvertedTimeMachine) {
-        card.transform = CGAffineTransformMakeScale(0.7f, 0.7f);
-        card.frame = view.frame;
-    }
+//    if (carousel.type == iCarouselTypeInvertedTimeMachine) {
+//        card.transform = CGAffineTransformMakeScale(0.6f, 0.6f);
+//        card.frame = view.frame;
+//    }
         [view addSubview:card];
 //    }else{
 //        //get a reference to the label in the recycled view
@@ -373,26 +411,37 @@
         case iCarouselOptionSpacing:
         {
             //add a bit of spacing between the item views
-            if (_carousel.type == iCarouselTypeRotary) {
-                return value;
+            if (_carousel.type == iCarouselTypeInvertedTimeMachine) {
+                return 0.2;
             }else{
-                return value*0.25f;
+                return value*0.7;
             }
         }
         case iCarouselOptionArc:{
-            return value*0.5;
-        }
-        case iCarouselOptionFadeMax:
-        {
-            return value;
+            return value*0.6;
         }
         case iCarouselOptionRadius:
         {
-            return value*1.25f;
+            return value*2;
         }
         case iCarouselOptionTilt:{
-            return value*1.25f;
+            return value*1.2;
         }
+        case iCarouselOptionFadeMin:{
+            if (_carousel.type == iCarouselTypeWheel) {
+                return -0.2;
+            }
+        }
+        case iCarouselOptionFadeMax:
+            if (_carousel.type == iCarouselTypeWheel) {
+                return 0.2;
+            }
+        case iCarouselOptionFadeRange:
+            if (_carousel.type == iCarouselTypeWheel) {
+                return 2;
+            }
+//        case iCarouselOptionAngle:
+//            return value*0.8;
         default:
         {
             return value;
@@ -417,5 +466,23 @@
 -(void)settingisCanceled{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
+#pragma mark - iCarousel Delegate
+//-(void)carouselDidEndScrollingAnimation:(iCarousel *)carousel{
+//    if (carousel.type == iCarouselTypeWheel) {
+//        [UIView animateWithDuration:0.5
+//                         animations:^{
+//                             carousel.currentItemView.transform = CGAffineTransformMakeTranslation(80, 0);
+//        }
+//         ];
+//    }
+//}
+//-(void)carouselWillBeginDragging:(iCarousel *)carousel{
+//    if (carousel.type == iCarouselTypeWheel) {
+//        [UIView animateWithDuration:0.3
+//                         animations:^{
+//                             carousel.currentItemView.transform = CGAffineTransformMakeTranslation(-80, 0);
+//                         }
+//         ];
+//    }
+//}
 @end
