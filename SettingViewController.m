@@ -129,7 +129,7 @@
 -(UIButton*)goBtn{
     if (_goBtn == nil) {
         _goBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _goBtn.frame = CGRectMake(500, 300, 100, 50);
+        _goBtn.frame = CGRectMake(500, 600, 100, 50);
         [_goBtn setTitle:@"Go" forState:UIControlStateNormal];
         _goBtn.userInteractionEnabled = NO;
         [_goBtn addTarget:self action:@selector(startSorting:) forControlEvents:UIControlEventTouchUpInside];

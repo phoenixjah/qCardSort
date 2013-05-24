@@ -20,15 +20,23 @@
 		B30AABEA17252570001B52AE /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B30AABE817252570001B52AE /* MainStoryboard.storyboard */; };
 		B30AABED17252570001B52AE /* qsortCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B30AABEC17252570001B52AE /* qsortCardViewController.m */; };
 		B311116D172CF9BB009A98CB /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = B311116C172CF9BB009A98CB /* iCarousel.m */; };
+		B31CEDBE174B58F2004C9843 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = B31CEDBD174B58F2004C9843 /* background.png */; };
+		B31CEDC0174B5CC1004C9843 /* UI.png in Resources */ = {isa = PBXBuildFile; fileRef = B31CEDBF174B5CC1004C9843 /* UI.png */; };
+		B31CEDC4174B5F30004C9843 /* UI-02.png in Resources */ = {isa = PBXBuildFile; fileRef = B31CEDC1174B5F30004C9843 /* UI-02.png */; };
+		B31CEDC5174B5F30004C9843 /* UI-03.png in Resources */ = {isa = PBXBuildFile; fileRef = B31CEDC2174B5F30004C9843 /* UI-03.png */; };
+		B31CEDC6174B5F30004C9843 /* UI-04.png in Resources */ = {isa = PBXBuildFile; fileRef = B31CEDC3174B5F30004C9843 /* UI-04.png */; };
+		B32CEE01174B1BBD00164164 /* card.png in Resources */ = {isa = PBXBuildFile; fileRef = B32CEE00174B1BBD00164164 /* card.png */; };
 		B3354D78172675660072DB04 /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3354D77172675660072DB04 /* CardView.m */; };
-		B3CBB9CA1741DB49002B7CB7 /* card.png in Resources */ = {isa = PBXBuildFile; fileRef = B3CBB9C91741DB48002B7CB7 /* card.png */; };
-		B3CBB9CE1741DF5A002B7CB7 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = B3CBB9CD1741DF5A002B7CB7 /* background.png */; };
+		B33F9B73174E22450007D76E /* LabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F9B72174E22450007D76E /* LabelView.m */; };
+		B3C15DA217476BEC00FA07CE /* chia_black.png in Resources */ = {isa = PBXBuildFile; fileRef = B3C15DA117476BEC00FA07CE /* chia_black.png */; };
+		B3C1F09717451BBE008D454F /* OverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C1F09617451BBE008D454F /* OverviewViewController.m */; };
 		B3CBB9D01741E7C4002B7CB7 /* Candara.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B3CBB9CF1741E7C4002B7CB7 /* Candara.ttf */; };
 		B3D6CED91727EF7F0096E7F2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */; };
 		B3F1CD0B1733C0FF0013FB27 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F1CD0A1733C0FF0013FB27 /* SettingViewController.m */; };
 		B3F1CD0D1733C1290013FB27 /* SettingViewTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3F1CD0C1733C1290013FB27 /* SettingViewTableCell.xib */; };
 		B3F276A11737DC6100B3613C /* SecondQsortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F276A01737DC6100B3613C /* SecondQsortViewController.m */; };
-		B3FA4EB717313E610031B5D0 /* CardData.m in Sources */ = {isa = PBXBuildFile; fileRef = B3FA4EB617313E610031B5D0 /* CardData.m */; };
+		B3F42ADA1745FE0D00C915B8 /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F42AD91745FE0D00C915B8 /* mask.png */; };
+		B3F42AE01746190000C915B8 /* thanks.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F42ADF1746190000C915B8 /* thanks.png */; };
 		B3FD8A8D17421989008F1689 /* labels_01.png in Resources */ = {isa = PBXBuildFile; fileRef = B3FD8A8A17421989008F1689 /* labels_01.png */; };
 		B3FD8A8E17421989008F1689 /* labels_04.png in Resources */ = {isa = PBXBuildFile; fileRef = B3FD8A8B17421989008F1689 /* labels_04.png */; };
 		B3FD8A8F17421989008F1689 /* labels_07.png in Resources */ = {isa = PBXBuildFile; fileRef = B3FD8A8C17421989008F1689 /* labels_07.png */; };
@@ -54,11 +62,20 @@
 		B30AABEC17252570001B52AE /* qsortCardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = qsortCardViewController.m; sourceTree = "<group>"; };
 		B311116B172CF9BB009A98CB /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		B311116C172CF9BB009A98CB /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		B31CEDBD174B58F2004C9843 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		B31CEDBF174B5CC1004C9843 /* UI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UI.png; sourceTree = "<group>"; };
+		B31CEDC1174B5F30004C9843 /* UI-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UI-02.png"; sourceTree = "<group>"; };
+		B31CEDC2174B5F30004C9843 /* UI-03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UI-03.png"; sourceTree = "<group>"; };
+		B31CEDC3174B5F30004C9843 /* UI-04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UI-04.png"; sourceTree = "<group>"; };
+		B32CEE00174B1BBD00164164 /* card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card.png; sourceTree = "<group>"; };
 		B3354D76172675660072DB04 /* CardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardView.h; sourceTree = "<group>"; };
 		B3354D77172675660072DB04 /* CardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardView.m; sourceTree = "<group>"; };
+		B33F9B71174E22450007D76E /* LabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelView.h; sourceTree = "<group>"; };
+		B33F9B72174E22450007D76E /* LabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelView.m; sourceTree = "<group>"; };
+		B3C15DA117476BEC00FA07CE /* chia_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chia_black.png; sourceTree = "<group>"; };
+		B3C1F09517451BBE008D454F /* OverviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverviewViewController.h; sourceTree = "<group>"; };
+		B3C1F09617451BBE008D454F /* OverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverviewViewController.m; sourceTree = "<group>"; };
 		B3C7728917292344004AD718 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
-		B3CBB9C91741DB48002B7CB7 /* card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card.png; sourceTree = "<group>"; };
-		B3CBB9CD1741DF5A002B7CB7 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		B3CBB9CF1741E7C4002B7CB7 /* Candara.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Candara.ttf; sourceTree = "<group>"; };
 		B3D6CED81727EF7F0096E7F2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B3F1CD091733C0FF0013FB27 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -66,8 +83,8 @@
 		B3F1CD0C1733C1290013FB27 /* SettingViewTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewTableCell.xib; sourceTree = "<group>"; };
 		B3F2769F1737DC6100B3613C /* SecondQsortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondQsortViewController.h; sourceTree = "<group>"; };
 		B3F276A01737DC6100B3613C /* SecondQsortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondQsortViewController.m; sourceTree = "<group>"; };
-		B3FA4EB517313E610031B5D0 /* CardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardData.h; sourceTree = "<group>"; };
-		B3FA4EB617313E610031B5D0 /* CardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardData.m; sourceTree = "<group>"; };
+		B3F42AD91745FE0D00C915B8 /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.png; sourceTree = "<group>"; };
+		B3F42ADF1746190000C915B8 /* thanks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thanks.png; sourceTree = "<group>"; };
 		B3FD8A8A17421989008F1689 /* labels_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labels_01.png; sourceTree = "<group>"; };
 		B3FD8A8B17421989008F1689 /* labels_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labels_04.png; sourceTree = "<group>"; };
 		B3FD8A8C17421989008F1689 /* labels_07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labels_07.png; sourceTree = "<group>"; };
@@ -133,6 +150,8 @@
 				B30AABEC17252570001B52AE /* qsortCardViewController.m */,
 				B3F2769F1737DC6100B3613C /* SecondQsortViewController.h */,
 				B3F276A01737DC6100B3613C /* SecondQsortViewController.m */,
+				B3C1F09517451BBE008D454F /* OverviewViewController.h */,
+				B3C1F09617451BBE008D454F /* OverviewViewController.m */,
 				B30AABD717252570001B52AE /* Supporting Files */,
 			);
 			path = "qsort card";
@@ -165,11 +184,18 @@
 		B33B5789172A87D00007B041 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B3C15DA117476BEC00FA07CE /* chia_black.png */,
+				B32CEE00174B1BBD00164164 /* card.png */,
+				B3F42ADF1746190000C915B8 /* thanks.png */,
+				B3F42AD91745FE0D00C915B8 /* mask.png */,
+				B31CEDBD174B58F2004C9843 /* background.png */,
 				B3FD8A8A17421989008F1689 /* labels_01.png */,
 				B3FD8A8B17421989008F1689 /* labels_04.png */,
+				B31CEDC1174B5F30004C9843 /* UI-02.png */,
+				B31CEDC2174B5F30004C9843 /* UI-03.png */,
+				B31CEDC3174B5F30004C9843 /* UI-04.png */,
+				B31CEDBF174B5CC1004C9843 /* UI.png */,
 				B3FD8A8C17421989008F1689 /* labels_07.png */,
-				B3CBB9CD1741DF5A002B7CB7 /* background.png */,
-				B3CBB9C91741DB48002B7CB7 /* card.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -179,8 +205,8 @@
 			children = (
 				B3354D76172675660072DB04 /* CardView.h */,
 				B3354D77172675660072DB04 /* CardView.m */,
-				B3FA4EB517313E610031B5D0 /* CardData.h */,
-				B3FA4EB617313E610031B5D0 /* CardData.m */,
+				B33F9B71174E22450007D76E /* LabelView.h */,
+				B33F9B72174E22450007D76E /* LabelView.m */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -253,12 +279,19 @@
 				B30AABE717252570001B52AE /* Default-568h@2x.png in Resources */,
 				B30AABEA17252570001B52AE /* MainStoryboard.storyboard in Resources */,
 				B3F1CD0D1733C1290013FB27 /* SettingViewTableCell.xib in Resources */,
-				B3CBB9CA1741DB49002B7CB7 /* card.png in Resources */,
-				B3CBB9CE1741DF5A002B7CB7 /* background.png in Resources */,
 				B3CBB9D01741E7C4002B7CB7 /* Candara.ttf in Resources */,
 				B3FD8A8D17421989008F1689 /* labels_01.png in Resources */,
 				B3FD8A8E17421989008F1689 /* labels_04.png in Resources */,
 				B3FD8A8F17421989008F1689 /* labels_07.png in Resources */,
+				B3F42ADA1745FE0D00C915B8 /* mask.png in Resources */,
+				B3F42AE01746190000C915B8 /* thanks.png in Resources */,
+				B3C15DA217476BEC00FA07CE /* chia_black.png in Resources */,
+				B32CEE01174B1BBD00164164 /* card.png in Resources */,
+				B31CEDBE174B58F2004C9843 /* background.png in Resources */,
+				B31CEDC0174B5CC1004C9843 /* UI.png in Resources */,
+				B31CEDC4174B5F30004C9843 /* UI-02.png in Resources */,
+				B31CEDC5174B5F30004C9843 /* UI-03.png in Resources */,
+				B31CEDC6174B5F30004C9843 /* UI-04.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,9 +307,10 @@
 				B30AABED17252570001B52AE /* qsortCardViewController.m in Sources */,
 				B3354D78172675660072DB04 /* CardView.m in Sources */,
 				B311116D172CF9BB009A98CB /* iCarousel.m in Sources */,
-				B3FA4EB717313E610031B5D0 /* CardData.m in Sources */,
 				B3F1CD0B1733C0FF0013FB27 /* SettingViewController.m in Sources */,
 				B3F276A11737DC6100B3613C /* SecondQsortViewController.m in Sources */,
+				B3C1F09717451BBE008D454F /* OverviewViewController.m in Sources */,
+				B33F9B73174E22450007D76E /* LabelView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

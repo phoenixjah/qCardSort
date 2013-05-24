@@ -9,7 +9,7 @@
 #import "SecondQsortViewController.h"
 #import "iCarousel.h"
 #import "CardView.h"
-#import "CardData.h"
+#import "OverviewViewController.h"
 #import <MessageUI/MessageUI.h>
 
 #define NOT_SORTED 3
@@ -25,11 +25,13 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+    //TODO:setup pageControl
     self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 300, 20, 100)];
     [self.view addSubview:self.pageControl];
     self.pageControl.numberOfPages = 3;
     self.pageControl.currentPage = 1;
     self.pageControl.backgroundColor = [UIColor blackColor];
+    
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
     self.scrollView.contentSize = CGSizeMake(1024, 768*3);
     self.scrollView.pagingEnabled = YES;
@@ -67,8 +69,8 @@
     //first three cardViews are unsorted
     self.cardsViews = [NSMutableArray array];
     for (int i = 0; i<3; i++) {
-        iCarousel *carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 30 + i*768, 300, 600)];
-        carousel.type = iCarouselTypeWheel;
+        iCarousel *carousel = [[iCarousel alloc] initWithFrame:CGRectMake(20, 30 + i*768, 400, 600)];
+        carousel.type = iCarouselTypeLinear;
         //carousel.backgroundColor = [UIColor cyanColor];
         carousel.tag = i;
         carousel.delegate = self;
@@ -81,7 +83,7 @@
     
     for (int i=0; i<9; i++) {
         iCarousel *carousel = [[iCarousel alloc] initWithFrame:CGRectMake(600, 30+i*250, 500, 100)];
-        carousel.type = iCarouselTypeInvertedTimeMachine;
+        carousel.type = iCarouselTypeCoverFlow2;
         carousel.tag = NOT_SORTED + i;
         carousel.delegate = self;
         carousel.dataSource = self;
@@ -92,7 +94,45 @@
     for (iCarousel *cards in self.cardsViews) {
         [self.scrollView addSubview:cards];
     }
-        //TODO: setup labelViews
+    //TODO: setup labelViews
+    [self openAnimation];
+}
+
+-(void)openAnimation{
+    __block iCarousel *mediumCards = [self.cardsViews objectAtIndex:1];
+    [mediumCards scrollByNumberOfItems:[mediumCards numberOfItems]/2 duration:0];
+    mediumCards.center = CGPointMake(mediumCards.center.x - 450, mediumCards.center.y);
+    //[mediumCards reloadData];
+    //move it out
+    [UIView animateWithDuration:0.8
+                          delay:0.1
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         mediumCards.transform = CGAffineTransformMakeTranslation(650, 0);
+                     }
+                     completion:^(BOOL finished){
+                         [UIView animateWithDuration:0.35
+                          delay:0.1 options:UIViewAnimationOptionCurveEaseOut
+                                          animations:^{
+                                              mediumCards.transform = CGAffineTransformMakeTranslation(450, 0);
+                                          }
+                                          completion:^(BOOL finished){
+                                              //spread it out
+                                              [UIView animateWithDuration:0.5
+                                                               animations:^{
+                                                                   for (iCarousel *carousel in self.cardsViews) {
+                                                                       carousel.type = iCarouselTypeWheel;
+                                                                   }
+                                                               }
+                                               ];
+                                              //self.timer = [NSTimer scheduledTimerWithTimeInterval:0.0005 target:self selector:@selector(increaseGhost:) userInfo:nil repeats:YES];
+                                              //[self.timer fire];
+                                              
+                                              mediumCards = nil;
+                                          }
+                          ];
+                     }
+     ];
 }
 
 #pragma mark - CardIsSorting Delegate Function
@@ -178,17 +218,7 @@
     
     if (cardLeft == 0) {
         //TODO:fuck I finished!!
-        UIButton *emailBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        emailBtn.frame = CGRectMake(250, 500, 100, 50);
-        [emailBtn setTitle:@"E-Mail" forState:UIControlStateNormal];
-        [emailBtn addTarget:self action:@selector(sendMail:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:emailBtn];
-        
-        UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        nextBtn.frame = CGRectMake(250, 600, 100, 50);
-        [nextBtn setTitle:@"To Next" forState:UIControlStateNormal];
-        [nextBtn addTarget:self action:@selector(toNext:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:nextBtn];
+        [self fuckIFinished];
     }
 }
 
@@ -261,7 +291,6 @@
         view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300.0f, 300.0f)];
     }
     //view.image = [UIImage imageNamed:@"card.png"];
-    view.backgroundColor = [UIColor blackColor];
     view.contentMode = UIViewContentModeCenter;
     
     label = [[UILabel alloc] initWithFrame:view.bounds];
@@ -295,8 +324,8 @@
     //    }
     item = [self.cardsDatas objectAtIndex:carousel.tag];
     label.text = [NSString stringWithFormat:@"index %d",index];
-    card.imageView.image = [UIImage imageWithContentsOfFile:[item objectAtIndex:index]];
-    //NSLog(@"index = %d",index);
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    card.imageView.image = [UIImage imageWithContentsOfFile:[documentPath stringByAppendingPathComponent:[item objectAtIndex:index]]];    //NSLog(@"index = %d",index);
 
     return view;
 }
@@ -315,8 +344,10 @@
         case iCarouselOptionSpacing:
         {
             //add a bit of spacing between the item views
-            if (_carousel.type == iCarouselTypeInvertedTimeMachine) {
-                return 0.2;
+            if (_carousel.type == iCarouselTypeCoverFlow2) {
+                return value*1.5;
+            }else if(_carousel.type == iCarouselTypeLinear){
+                return 0.01;
             }else{
                 return value*0.7;
             }
@@ -329,21 +360,21 @@
             return value*2;
         }
         case iCarouselOptionTilt:{
-            return value*1.2;
+            return 0.75;
         }
         case iCarouselOptionFadeMin:{
-            if (_carousel.type == iCarouselTypeWheel) {
-                return -0.2;
-            }
+            //if (_carousel.type == iCarouselTypeWheel) {
+            return -0.2;
+            //}
         }
         case iCarouselOptionFadeMax:
-            if (_carousel.type == iCarouselTypeWheel) {
-                return 0.2;
-            }
+            //if (_carousel.type == iCarouselTypeWheel) {
+            return 0.2;
+            //}
         case iCarouselOptionFadeRange:
-            if (_carousel.type == iCarouselTypeWheel) {
-                return 2;
-            }
+            //if (_carousel.type == iCarouselTypeWheel) {
+            return 2;
+            //}
             //        case iCarouselOptionAngle:
             //            return value*0.8;
         default:
@@ -357,53 +388,38 @@
     if (index != carousel.currentItemIndex) {
         [carousel scrollToItemAtIndex:index animated:YES];
     }
-    //NSLog(@"index = %d",index);
+   
     return NO;
 }
 #pragma mark - End Sorting
--(void)sendMail:(UIButton*)btn{
-    // Email Subject
-    NSString *emailTitle = @"Test Email";
-    // Email Content
-    NSString *messageBody = @"iOS programming is so fun!";
-    // To address
-    NSArray *toRecipents = [NSArray arrayWithObject:@"support@appcoda.com"];
-    
-    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
-    mc.mailComposeDelegate = self;
-    [mc setSubject:emailTitle];
-    [mc setMessageBody:messageBody isHTML:NO];
-    [mc setToRecipients:toRecipents];
-    
-    // Present mail view controller on screen
-    [self presentViewController:mc animated:YES completion:NULL];
-    
-}
 
-- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
-{
-    switch (result)
-    {
-        case MFMailComposeResultCancelled:
-            NSLog(@"Mail cancelled");
-            break;
-        case MFMailComposeResultSaved:
-            NSLog(@"Mail saved");
-            break;
-        case MFMailComposeResultSent:
-            NSLog(@"Mail sent");
-            break;
-        case MFMailComposeResultFailed:
-            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
-            break;
-        default:
-            break;
+-(void)fuckIFinished{
+    //move away
+    for (int i = NOT_SORTED; i<[self.cardsViews count]; i++) {
+        iCarousel *carousel = [self.cardsViews objectAtIndex:i];
+        [carousel scrollByNumberOfItems:-10 duration:1];
     }
-    
-    // Close the Mail Interface
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
 
--(void)toNext:(UIButton*)btn{
+    [UIView animateWithDuration:1
+                          delay:0.3
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         for (int i = NOT_SORTED; i<[self.cardsViews count]; i++) {
+                             iCarousel *carousel = [self.cardsViews objectAtIndex:i];
+                             carousel.transform = CGAffineTransformMakeTranslation(500, 0);
+                         }
+                                             }
+                     completion:^(BOOL finished){
+                         OverviewViewController *newViewController = [[OverviewViewController alloc] init];
+                         NSRange range;
+                         range.location = 0;
+                         range.length = 3;
+                         [self.cardsDatas removeObjectsInRange:range];
+                         [newViewController setUpDatas:self.cardsDatas label:self.labelDatas];
+                         [newViewController setScrollViewOffset:self.scrollView.contentOffset];
+                         [self.navigationController pushViewController:newViewController animated:NO];
+
+                     }
+     ];
 }
 @end

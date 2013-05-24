@@ -36,7 +36,7 @@
 -(UIImageView*)imageView{
     
     if (_imageView == nil) {
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, self.frame.size.width-10, self.frame.size.height-10)];
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, self.frame.size.width-10, self.frame.size.height-20)];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _imageView;
