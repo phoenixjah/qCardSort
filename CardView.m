@@ -8,7 +8,6 @@
 
 #import "CardView.h"
 #import <QuartzCore/QuartzCore.h>
-#import "Constant.h"
 
 @implementation CardView
 
@@ -36,7 +35,7 @@
 -(UIImageView*)imageView{
     
     if (_imageView == nil) {
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, self.frame.size.width-10, self.frame.size.height-20)];
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, self.frame.size.width-10, self.frame.size.height-25)];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _imageView;

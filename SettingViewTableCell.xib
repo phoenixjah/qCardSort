@@ -53,7 +53,6 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<string key="IBUIText">ADJ</string>
-								<nil key="IBUITextColor"/>
 								<object class="NSColor" key="IBUIHighlightedColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
@@ -147,7 +146,7 @@
 						</array>
 						<string key="NSFrameSize">{564, 164}</string>
 						<reference key="NSSuperview" ref="743813469"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSNextKeyView" ref="304699494"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>

@@ -7,7 +7,10 @@
 //
 
 #import "SettingViewController.h"
-#import "Constant.h"
+
+#define KEY_FROM @"FROM"
+#define KEY_TO @"TO"
+#define LABEL_FILENAME @"Labels.plist"
 
 @interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property (nonatomic,strong) UITableView *tableView;
@@ -30,10 +33,29 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.view = self.tableView;
     
-    self.datas = [NSMutableArray arrayWithObject:[NSMutableDictionary dictionaryWithCapacity:2]];
+    NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), LABEL_FILENAME];
+	//NSURL *outputURL = [[NSURL alloc] initFileURLWithPath:outputPath];
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if ([fileManager fileExistsAtPath:outputPath]) {
+        self.datas = [NSMutableArray arrayWithObject:[NSMutableDictionary dictionaryWithContentsOfFile:outputPath]];
+    }else{
+        self.datas = [NSMutableArray arrayWithObject:[NSMutableDictionary dictionaryWithCapacity:2]];
+    }
     [self setAddAndEditBtns];
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+
+    NSString *fromAdj = [[self.datas objectAtIndex:0] objectForKey:KEY_FROM];
+    NSString *toAdj = [[self.datas objectAtIndex:0] objectForKey:KEY_TO];
+    if ([fromAdj length]>0 && [toAdj length]>0) {
+        self.goBtn.userInteractionEnabled = YES;
+    }else{
+        self.goBtn.userInteractionEnabled = NO;
+    }
+
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

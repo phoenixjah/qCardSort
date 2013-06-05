@@ -17,4 +17,5 @@
 @property (nonatomic,strong) NSMutableArray *cardsDatas;
 @property (nonatomic,strong) NSArray *labelViews;
 @property (nonatomic,strong) NSArray *labelDatas;
+@property (nonatomic,strong) NSArray *currentIndexs;
 @end

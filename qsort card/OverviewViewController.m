@@ -9,12 +9,14 @@
 #import "OverviewViewController.h"
 #import "CardView.h"
 #import "iCarousel.h"
+#import "LabelView.h"
 #import <MessageUI/MessageUI.h>
 
 #define FILENAME @"Cards.plist"
+#define ATTACHED @"result.txt"
+
 @interface OverviewViewController ()<MFMailComposeViewControllerDelegate,iCarouselDataSource,iCarouselDelegate,CardIsSorting,UIScrollViewDelegate>
 @property (nonatomic,strong) UIScrollView *scrollView;
-@property (nonatomic) CGFloat ghost;
 @property (nonatomic,strong) UIPageControl *pageControl;
 @property (nonatomic,strong) NSTimer *timer;
 @property (nonatomic,strong) UIButton *doneBtn;
@@ -32,18 +34,19 @@
     
     //display btns
     self.emailBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.emailBtn.frame = CGRectMake(-50, 500, 100, 50);
+    self.emailBtn.frame = CGRectMake(500, 500, 100, 50);
     [self.emailBtn setTitle:@"E-Mail" forState:UIControlStateNormal];
     [self.emailBtn addTarget:self action:@selector(sendMail:) forControlEvents:UIControlEventTouchUpInside];
     
     self.nextBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.nextBtn.frame = CGRectMake(-150, 600, 100, 50);
+    self.nextBtn.frame = CGRectMake(650, 500, 100, 50);
     [self.nextBtn setTitle:@"To Next" forState:UIControlStateNormal];
     [self.nextBtn addTarget:self action:@selector(toNext:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.doneBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.doneBtn.frame = CGRectMake(-100, 500, 100, 50);
-    [self.doneBtn setTitle:@"Done" forState:UIControlStateNormal];
+    self.doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.doneBtn.frame = CGRectMake(1024, 500, 100, 100);
+    self.doneBtn.backgroundColor = [UIColor blackColor];
+    [self.doneBtn setImage:[UIImage imageNamed:@"done_normal.png"] forState:UIControlStateNormal];
     [self.doneBtn addTarget:self action:@selector(fuckFinished:) forControlEvents:UIControlEventTouchUpInside];
     
     //TODO:setup pageControl
@@ -53,7 +56,12 @@
     self.pageControl.currentPage = 1;
     self.pageControl.backgroundColor = [UIColor blackColor];
     
-    self.ghost = 1;
+    UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(512, 0, 512, 768)];
+    background.image = [UIImage imageNamed:@"bar-all.png"];
+    background.contentMode = UIViewContentModeTop;
+    [self.scrollView addSubview:background];
+    [self.view addSubview:self.scrollView];
+
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -69,7 +77,6 @@
     if (_scrollView == nil) {
         _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
         _scrollView.contentSize = CGSizeMake(1024, 768*3);
-        _scrollView.pagingEnabled = YES;
         _scrollView.delegate = self;
         [self.view addSubview:_scrollView];
     }
@@ -94,7 +101,7 @@
         carousel.tag = i;
         carousel.delegate = self;
         carousel.dataSource = self;
-        carousel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1+0.15*i];
+        //carousel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1+0.15*i];
         [self.cardsViews addObject:carousel];
         
     }
@@ -102,6 +109,19 @@
         [self.scrollView addSubview:cards];
     }
     //TODO: setup labelViews
+    for (int i =0; i<9; i++) {
+        LabelView *label = [[LabelView alloc] initWithFrame:CGRectMake(50, 20+i*250, 140, 50)];
+        //label.backgroundColor = [UIColor blackColor];
+        label.label.text = [NSString stringWithFormat:@"%d",i+1];
+        [self.scrollView addSubview:label];
+//        if (i%3==0) {
+//            UILabel *groupTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 20+i*250, 100, 50)];
+//            groupTitle.text = [NSString stringWithFormat:@"%@",[self.labelDatas objectAtIndex:i%3]];
+//            [self.scrollView addSubview:groupTitle];
+//        }
+
+    }
+
     [self openAnimation];
 }
 
@@ -117,7 +137,8 @@
                          }
                          completion:^(BOOL finished){
                              [UIView animateWithDuration:0.35
-                                                   delay:0.1 options:UIViewAnimationOptionCurveEaseOut
+                                                   delay:0.1
+                                                 options:UIViewAnimationOptionCurveEaseOut
                                               animations:^{
                                                   cardView.transform = CGAffineTransformMakeTranslation(-1000, 0);
                                               }
@@ -126,11 +147,10 @@
                                                   [UIView animateWithDuration:0.5
                                                                    animations:^{
                                                   cardView.type = iCarouselTypeCoverFlow2;
-                                                                       self.ghost = 1.8;
-                                                  //self.timer = [NSTimer scheduledTimerWithTimeInterval:0.0005 target:self selector:@selector(increaseGhost:) userInfo:nil repeats:YES];
-//                                                  [self.timer fire];
-//                                                  
-//                                                  mediumCards = nil;
+                                                                   }
+                                                                   completion:^(BOOL finished){
+                                                                       [cardView scrollByNumberOfItems:[cardView numberOfItems]/2
+                                                                                              duration:0.5*[cardView numberOfItems]];
                                                                    }
                                                    ];
                                               }
@@ -140,22 +160,6 @@
     }
 }
 
--(void)increaseGhost:(NSTimer*)timer{
-    //NSLog(@"ghost = %f",self.ghost);
-    if (self.ghost > 2) {
-        self.ghost = 2;
-        [self.timer invalidate];
-        self.timer = nil;
-        [((iCarousel*)[self.cardsViews objectAtIndex:1]) reloadData];
-        //[((iCarousel*)[self.cardsViews objectAtIndex:1]) scrollByNumberOfItems:1 duration:0.2];
-    }else if(self.ghost > 1.8){
-        self.ghost = self.ghost + 0.1;
-        [((iCarousel*)[self.cardsViews objectAtIndex:1]) reloadData];
-    }else{
-        self.ghost = self.ghost + 0.1;
-        [((iCarousel*)[self.cardsViews objectAtIndex:1]) reloadData];
-    }
-}
 
 -(void)setScrollViewOffset:(CGPoint)offset{
     self.scrollView.contentOffset = offset;
@@ -185,7 +189,7 @@
             scoreBox.backgroundColor = [UIColor lightGrayColor];
             sortedIndex = scoreBox.tag;
         }else{
-            scoreBox.backgroundColor = [UIColor whiteColor];
+            scoreBox.backgroundColor = nil;
         }
         
     }
@@ -200,7 +204,7 @@
         CGRect boxPosition = [scoreBox convertRect:scoreBox.bounds toView:self.view];
         if (CGRectIntersectsRect(boxPosition, cardPosition)) {
             //assign to that group
-            scoreBox.backgroundColor = [UIColor lightGrayColor];
+            scoreBox.backgroundColor = nil;
             sortedToGroup = scoreBox.tag;
             break;
         }
@@ -255,18 +259,12 @@
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
     NSMutableArray *carouselDatas;
-    //        NSLog(@"carousel %d",carousel.tag);
-    //        for (NSString *path in carouselDatas) {
-    //            NSLog(@"data %@",path);
-    //        }
     carouselDatas = [self.cardsDatas objectAtIndex:carousel.tag];
     return [carouselDatas count];
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
 {
-    //TODO: handle the nested iCarousel View
-    UILabel *label = nil;
     CardView *card = nil;
     
     
@@ -276,15 +274,7 @@
     //    {
     view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 180.0f, 180.0f)];
 
-    //view.image = [UIImage imageNamed:@"card.png"];
     view.contentMode = UIViewContentModeCenter;
-    
-    label = [[UILabel alloc] initWithFrame:view.bounds];
-    label.backgroundColor = [UIColor clearColor];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.font = [label.font fontWithSize:8];
-    label.tag = -1;
-    [view addSubview:label];
     
     card = [[CardView alloc] initWithFrame:view.frame];
     card.delegate = self;
@@ -305,11 +295,8 @@
     //in the wrong place in the carousel
     NSMutableArray *item;
     
-    //    if (carousel.type == iCarouselTypeInvertedTimeMachine) {
-    //        view.transform = CGAffineTransformMakeScale(0.7f, 0.7f);
-    //    }
     item = [self.cardsDatas objectAtIndex:carousel.tag];
-    label.text = [NSString stringWithFormat:@"index %d",index];
+    
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     card.imageView.image = [UIImage imageWithContentsOfFile:[documentPath stringByAppendingPathComponent:[item objectAtIndex:index]]];
     //NSLog(@"index = %d",index);
@@ -346,7 +333,7 @@
             return value*2;
         }
         case iCarouselOptionTilt:{
-            return value*0.75;
+            return 0.75;
         }
             //        case iCarouselOptionAngle:
             //            return value*0.8;
@@ -364,11 +351,10 @@
     if ([[self.view subviews] containsObject:self.doneBtn] == YES) {
                 [UIView animateWithDuration:0.5
                          animations:^{
-                             self.doneBtn.transform = CGAffineTransformMakeTranslation(-100, 0);
+                             self.doneBtn.transform = CGAffineTransformMakeTranslation(100, 0);
                          }
                                  completion:^(BOOL finished){
                                      [self.doneBtn removeFromSuperview];
-
                                  }
          ];
     }
@@ -389,10 +375,16 @@
     
     [mc setMessageBody:messageBody isHTML:NO];
 
-    //TODO:attach file
-//    NSString *filePath;
-//    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    //[mc addAttachmentData:data mimeType:@"text/plain" fileName:@"result.txt"];
+    NSString *filePath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), ATTACHED];
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	if ([fileManager fileExistsAtPath:filePath])
+	{
+        NSData *data = [NSData dataWithContentsOfFile:filePath];
+        [mc addAttachmentData:data mimeType:@"text/plain" fileName:ATTACHED];
+	}else{
+        //TODO:file does not exist
+    }
+
     // Present mail view controller on screen
     [self presentViewController:mc animated:YES completion:NULL];
     
@@ -403,14 +395,23 @@
     switch (result)
     {
         case MFMailComposeResultCancelled:
-            NSLog(@"Mail cancelled");
+            //NSLog(@"Mail cancelled");
             break;
         case MFMailComposeResultSaved:
-            NSLog(@"Mail saved");
+            //NSLog(@"Mail saved");
             break;
-        case MFMailComposeResultSent:
-            NSLog(@"Mail sent");
+        case MFMailComposeResultSent:{
+            //NSLog(@"Mail sent");
+            //Delete the result file
+            NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), ATTACHED];
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            NSError *error;
+            if ([fileManager removeItemAtPath:outputPath error:&error] == NO){
+                    //Error - handle if required
+                NSLog(@"remove attached file error");
+            }
             break;
+        }
         case MFMailComposeResultFailed:
             NSLog(@"Mail sent failure: %@", [error localizedDescription]);
             break;
@@ -423,73 +424,86 @@
 }
 
 -(void)toNext:(UIButton*)btn{
-    UIImageView *thankView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"thanks.png"]];
-    thankView.alpha = 0;
+
     [UIView animateWithDuration:1.0
                      animations:^{
                          self.view.transform = CGAffineTransformMakeScale(0.0, 0.0);
                      }
                      completion:^(BOOL finished){
-                         [UIView transitionFromView:self.view
-                                             toView:thankView
-                                           duration:0
-                                            options:UIViewAnimationOptionBeginFromCurrentState completion:^(BOOL finished){
-                                                
-                                                self.view.transform = CGAffineTransformMakeScale(1.0, 1.0);
-                                                [UIView animateWithDuration:1
-                                                                 animations:^{
-                                                                     thankView.alpha = 1.0;
-                                                }
-                                                 ];
-                                            }
-                          ];
+                         self.view.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                         [self.navigationController popToRootViewControllerAnimated:NO];
                      }
      ];
 }
 
 -(void)fuckFinished:(UIButton*)btn{
     self.scrollView.userInteractionEnabled = NO;
-    UIImageView *mask = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mask.png"]];
-    mask.alpha = 0.0;
-    [self.view addSubview:mask];
     
-    //write sorting result to file
-    [self writeResult];
-    //[self.view addSubview:self.emailBtn];
-    [self.view addSubview:self.nextBtn];
-    [UIView transitionFromView:self.doneBtn
-                        toView:self.emailBtn
-                      duration:0.5
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    completion:nil
-     ];
     [UIView animateWithDuration:0.5
                      animations:^{
                          for (iCarousel *cards in self.cardsViews) {
                              cards.type = iCarouselTypeLinear;
                          }
-
+                         
                          self.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
-                         mask.alpha = 0.8;
                          self.nextBtn.transform = CGAffineTransformMakeTranslation(100, 0);
                      }
                      completion:^(BOOL finished){
                          self.doneBtn = nil;
                      }
      ];
+
+    UIImageView *mask = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"thanks.png"]];
+    mask.alpha = 0.9;
+    
+    //write sorting result to file
+    [self writeResult];
+
+    [self.view addSubview:self.nextBtn];
+    [self.view addSubview:self.emailBtn];
+    [UIView transitionFromView:self.doneBtn
+                        toView:mask
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    completion:^(BOOL finished){
+                        [self.doneBtn removeFromSuperview];
+                    }
+     ];
 }
 -(void)writeResult{
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:[documentPath stringByAppendingPathComponent:FILENAME]];
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:[NSTemporaryDirectory() stringByAppendingPathComponent:FILENAME]];
     for (int i=0;i<[self.cardsDatas count];i++){
         NSArray *cards = [self.cardsDatas objectAtIndex:i];
         for (NSString *group in cards) {
-            [dictionary setValue:[NSString stringWithFormat:@"%d",i] forKey:group];
+            [dictionary setValue:[NSString stringWithFormat:@"%d",i+1] forKey:group];
         }
     }
     
-    [dictionary writeToFile:[documentPath stringByAppendingPathComponent:FILENAME] atomically:YES];
+    //TODO:delete this when correctness is for sure, there is no need to keep this plist
+    [dictionary writeToFile:[NSTemporaryDirectory() stringByAppendingPathComponent:FILENAME] atomically:YES];
+
+    //prepare the attached file
+    NSString *output = @"Filename\tResult\n";
+    for (NSString *key in [dictionary allKeys]) {
+        //NSLog(@"%@ -> %@",key,[dictionary valueForKey:key]);
+        output = [output stringByAppendingFormat:@"%@\t%@\n",key,[dictionary valueForKey:key]];
+       //NSLog(@"%@",output);
+    }
+    
+    NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), ATTACHED];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+	if (![fileManager fileExistsAtPath:outputPath])
+	{
+        [fileManager createFileAtPath:outputPath contents:nil attributes:nil];
+        [output writeToFile:outputPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+	}else{
+        //append file
+        NSFileHandle *handle = [NSFileHandle fileHandleForWritingAtPath:outputPath];
+        [handle truncateFileAtOffset:[handle seekToEndOfFile]];
+        [handle writeData:[output dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+
     dictionary = nil;
 }
 #pragma mark - scrollView Delegate
@@ -498,7 +512,7 @@
         [self.view addSubview:self.doneBtn];
         [UIView animateWithDuration:0.5
                          animations:^{
-                             self.doneBtn.transform = CGAffineTransformMakeTranslation(100, 0);
+                             self.doneBtn.transform = CGAffineTransformMakeTranslation(-100, 0);
         }
          ];
     }
