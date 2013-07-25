@@ -14,13 +14,14 @@
 
 @implementation ShowProgressImageView
 
--(id)initWithImage:(UIImage *)image{
-    self = [super initWithImage:image];
+-(id)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
     if (self) {
-        self.leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 2, 100, 20)];
+        self.leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 50, 20)];
+        self.leftLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:self.leftLabel];
-        
-        self.center = CGPointMake(500,768);
+        self.image = [UIImage imageNamed:@"pageControl_none.png"];
+        self.highlightedImage = [UIImage imageNamed:@"pageControl.png"];
     }
     return self;
 }
@@ -39,7 +40,7 @@
     
     [UIView animateWithDuration:0.5
                      animations:^{
-                         self.transform = CGAffineTransformMakeTranslation(0, -self.frame.size.height);
+                         self.transform = CGAffineTransformMakeTranslation(0, self.frame.size.height);
                      }
                      completion:^(BOOL finished){
                          [self performSelector:@selector(goBackAnimation:)
@@ -53,7 +54,7 @@
 -(void)goBackAnimation:(id)sender{
     [UIView animateWithDuration:0.5
                      animations:^{
-                         self.transform = CGAffineTransformMakeTranslation(0, self.frame.size.height);
+                         self.transform = CGAffineTransformMakeTranslation(0, -self.frame.size.height);
                      }
                      completion:^(BOOL finished){
                          [self removeFromSuperview];

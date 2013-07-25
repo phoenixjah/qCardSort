@@ -15,11 +15,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-//        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 30, frame.size.width, frame.size.height - 20)];
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 40, 68, 170)];
 //        self.imageView.backgroundColor = [UIColor grayColor];
-//        [self addSubview:self.imageView];
+        [self addSubview:self.imageView];
         
-        self.label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, frame.size.width, 20)];
+        self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 68, 20)];
+        self.label.backgroundColor = [UIColor clearColor];
         [self addSubview:self.label];
     }
     return self;

@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface OverviewViewController : UIViewController
--(void)setUpDatas:(NSArray*)cardDatas label:(NSArray*)labelDatas;
+-(void)setUpDatas:(NSArray*)cardDatas;
 -(void)setScrollViewOffset:(CGPoint)offset;
 
 @property (nonatomic,strong) NSMutableArray *cardsViews;
 @property (nonatomic,strong) NSMutableArray *cardsDatas;
-@property (nonatomic,strong) NSArray *labelViews;
-@property (nonatomic,strong) NSArray *labelDatas;
+@property (nonatomic,strong) NSMutableArray *labelViews;
+@property (nonatomic) int stage;
 @end

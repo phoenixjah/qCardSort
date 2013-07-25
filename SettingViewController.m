@@ -38,7 +38,7 @@
 	NSFileManager *fileManager = [NSFileManager defaultManager];
     
     if ([fileManager fileExistsAtPath:outputPath]) {
-        self.datas = [NSMutableArray arrayWithObject:[NSMutableDictionary dictionaryWithContentsOfFile:outputPath]];
+        self.datas = [NSMutableArray arrayWithContentsOfFile:outputPath];
     }else{
         self.datas = [NSMutableArray arrayWithObject:[NSMutableDictionary dictionaryWithCapacity:2]];
     }
@@ -46,7 +46,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-
+    
     NSString *fromAdj = [[self.datas objectAtIndex:0] objectForKey:KEY_FROM];
     NSString *toAdj = [[self.datas objectAtIndex:0] objectForKey:KEY_TO];
     if ([fromAdj length]>0 && [toAdj length]>0) {
@@ -69,6 +69,7 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+
     static NSString *cellIdentifier = @"SettingViewTableCell";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     

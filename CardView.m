@@ -21,10 +21,11 @@
         background.contentMode = UIViewContentModeScaleAspectFit;
         background.image = [UIImage imageNamed:@"card.png"];
         [self addSubview:background];
-
+        background = nil;
+        
         UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panPiece:)];
         //[panGesture setDelegate:self];
-        [panGesture setMaximumNumberOfTouches:2];
+        [panGesture setMaximumNumberOfTouches:1];
         [self addGestureRecognizer:panGesture];
         
         [self addSubview:self.imageView];
@@ -61,7 +62,6 @@
 {
     UIView *piece = [gestureRecognizer view];
     //[self adjustAnchorPointForGestureRecognizer:gestureRecognizer];
-    //NSLog(@"tapped");
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
         CGPoint translation = [gestureRecognizer translationInView:[piece superview]];
         

@@ -11,11 +11,11 @@
 @class iCarousel;
 
 @interface SecondQsortViewController :UIViewController
--(void)setUpDatas:(NSArray*)cardDatas label:(NSArray*)labelDatas;
+-(void)setUpDatas:(NSArray*)cardDatas;
 
 @property (nonatomic,strong) NSMutableArray *cardsViews;
 @property (nonatomic,strong) NSMutableArray *cardsDatas;
-@property (nonatomic,strong) NSArray *labelViews;
-@property (nonatomic,strong) NSArray *labelDatas;
+@property (nonatomic,strong) NSMutableArray *labelViews;
 @property (nonatomic,strong) NSArray *currentIndexs;
+@property (nonatomic) int stage;
 @end

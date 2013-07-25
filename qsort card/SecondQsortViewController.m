@@ -6,22 +6,28 @@
 //  Copyright (c) 2013年 Chia Lin. All rights reserved.
 //
 
-#import "SecondQsortViewController.h"
 #import "iCarousel.h"
 #import "CardView.h"
+#import "LabelView.h"
+#import "Constant.h"
 #import "OverviewViewController.h"
 #import "ShowProgressImageView.h"
-#import "LabelView.h"
+#import "SecondQsortViewController.h"
+
 
 #define NOT_SORTED 3
 #define PAGE_1 0
 #define PAGE_2 768
 #define PAGE_3 1536
+#define selectedTag 3
 
 @interface SecondQsortViewController ()<CardIsSorting,iCarouselDataSource,iCarouselDelegate,UIScrollViewDelegate>
 @property (nonatomic,strong) UIScrollView *scrollView;
-@property (nonatomic,strong) UIPageControl *pageControl;
-@property (nonatomic,strong) ShowProgressImageView *littleMan;
+@property (nonatomic,strong) ShowProgressImageView *page_1;
+@property (nonatomic,strong) ShowProgressImageView *page_2;
+@property (nonatomic,strong) ShowProgressImageView *page_3;
+@property (nonatomic,strong) UIImageView *selectedImage;
+@property NSTimer *timer;
 @end
 
 @implementation SecondQsortViewController
@@ -32,30 +38,33 @@
 	// Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     
-    self.littleMan = [[ShowProgressImageView alloc] initWithImage:[UIImage imageNamed:@"progress.png"]];
+
     //TODO:setup pageControl
-    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 300, 20, 100)];
-    [self.view addSubview:self.pageControl];
-    self.pageControl.numberOfPages = 3;
-    self.pageControl.currentPage = 1;
-    self.pageControl.backgroundColor = [UIColor blackColor];
+    self.page_1 = [[ShowProgressImageView alloc] initWithFrame:CGRectMake(0, 300, 50, 50)];
+    [self.view addSubview:self.page_1];
+    self.page_2 = [[ShowProgressImageView alloc] initWithFrame:CGRectMake(0, 350, 50, 50)];
+    [self.view addSubview:self.page_2];
+    self.page_3 = [[ShowProgressImageView alloc] initWithFrame:CGRectMake(0, 400, 50, 50)];
+    [self.view addSubview:self.page_3];
+
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
     self.scrollView.contentSize = CGSizeMake(1024, 768*3);
     self.scrollView.delegate = self;
     [self.scrollView setContentOffset:CGPointMake(0, 768)];
     self.scrollView.pagingEnabled = YES;
-    UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(512, 0, 512, 768)];
-    background.image = [UIImage imageNamed:@"bar-all.png"];
+    UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(530, 0, 68, 2304)];
+    background.image = [UIImage imageNamed:@"labels_all.png"];
     background.contentMode = UIViewContentModeTop;
     [self.scrollView addSubview:background];
     [self.view addSubview:self.scrollView];
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     //NSLog(@"bounds.heoght %f",self.view.bounds.size.height);
-    if (self.cardsDatas != nil && self.labelDatas != nil) {
+    if (self.cardsDatas != nil) {
         [self setupViews];
     }
 }
@@ -64,10 +73,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(UIImageView*)selectedImage{
+    if (_selectedImage == nil) {
+        _selectedImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected.png"]];
+    }
+    return _selectedImage;
+}
 #pragma mark - Setup Datas
--(void)setUpDatas:(NSArray *)cardDatas label:(NSArray *)labelDatas{
-    self.labelDatas = [NSArray arrayWithArray:labelDatas];
+-(void)setUpDatas:(NSArray *)cardDatas{
+
     self.cardsDatas = [NSMutableArray arrayWithArray:cardDatas];
 //        for (int i=0;i<[self.cardsDatas count];i++) {
 //            NSMutableArray *data = [self.cardsDatas objectAtIndex:i];
@@ -87,7 +101,6 @@
     for (int i = 0; i<3; i++) {
         iCarousel *carousel = [[iCarousel alloc] initWithFrame:CGRectMake(20, 70 + i*768, 350, 650)];
         carousel.type = iCarouselTypeRotary;
-        //carousel.backgroundColor = [UIColor cyanColor];
         carousel.tag = i;
         carousel.delegate = self;
         carousel.dataSource = self;
@@ -99,12 +112,12 @@
     }
     
     for (int i=0; i<9; i++) {
-        iCarousel *carousel = [[iCarousel alloc] initWithFrame:CGRectMake(600, 100 + i*256, 500, 90)];
+        iCarousel *carousel = [[iCarousel alloc] initWithFrame:CGRectMake(600, 70 + i*260, 500, 90)];
         carousel.type = iCarouselTypeCoverFlow2;
         carousel.tag = NOT_SORTED + i;
         carousel.delegate = self;
         carousel.dataSource = self;
-        carousel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1+0.15*i];
+        carousel.contentOffset = CGSizeMake(-50, 0);
         [self.cardsViews addObject:carousel];
 
     }
@@ -112,21 +125,29 @@
         [self.scrollView addSubview:cards];
     }
     //TODO: setup labelViews
-//    for (int i =0; i<9; i++) {
-//        LabelView *label = [[LabelView alloc] initWithFrame:CGRectMake(550, 10+i*190, 140, 50)];
-//        label.label.text = [NSString stringWithFormat:@"%d",i+1];
-//        if (i%3==0) {
-//            UILabel *groupTitle = [[UILabel alloc] initWithFrame:CGRectMake(400, 10+i*190, 140, 50)];
-//            groupTitle.text = (NSString*)[self.labelDatas objectAtIndex:i%3];
-//            [self.scrollView addSubview:groupTitle];
-//        }
-//        [self.scrollView addSubview:label];
-//    }
+    NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), LABEL_FILENAME];
+    NSDictionary *data = [NSDictionary dictionaryWithDictionary:([NSArray arrayWithContentsOfFile:outputPath][self.stage])];
+    self.labelViews = [NSMutableArray array];
+    for (int i =0; i<3; i++) {
+        LabelView *label = [[LabelView alloc] initWithFrame:CGRectMake(450, 20 + i*768, 140, 50)];
+        [self.labelViews addObject:label];
+        [self.scrollView addSubview:label];
+    }
+    ((LabelView*)[self.labelViews objectAtIndex:0]).label.text = [NSString stringWithFormat:@"%@",[data objectForKey:KEY_FROM]];
+    ((LabelView*)[self.labelViews objectAtIndex:1]).label.text = @"Medium";
+    ((LabelView*)[self.labelViews objectAtIndex:2]).label.text = [NSString stringWithFormat:@"%@",[data objectForKey:KEY_TO]];
+    
+    //pageControl numbers
+    [self.page_1 setLabel:[NSString stringWithFormat:@"%d",[self.cardsDatas[0] count]]];
+    [self.page_2 setLabel:[NSString stringWithFormat:@"%d",[self.cardsDatas[1] count]]];
+    [self.page_3 setLabel:[NSString stringWithFormat:@"%d",[self.cardsDatas[2] count]]];
+    self.page_2.highlighted = YES;
+    
     [self openAnimation];
 }
 
 -(void)openAnimation{
-    __block iCarousel *mediumCards = [self.cardsViews objectAtIndex:1];
+    __block iCarousel *mediumCards = self.cardsViews[1];
     //[mediumCards scrollByNumberOfItems:[mediumCards numberOfItems]/2 duration:0];
     mediumCards.center = CGPointMake(mediumCards.center.x - 450, mediumCards.center.y);
     //[mediumCards reloadData];
@@ -147,10 +168,11 @@
                                               //spread it out
                                               [UIView animateWithDuration:1
                                                                animations:^{
-                                                                   mediumCards.type = iCarouselTypeWheel;
+                                                                   for (int i=0;i<NOT_SORTED;i++) {
+                                                                       ((iCarousel*)self.cardsViews[i]).type = iCarouselTypeWheel;
+                                                                   }
                                                                }
                                                                completion:^(BOOL finished){
-//                                                                   [mediumCards scrollByNumberOfItems:[mediumCards numberOfItems]/2 duration:0.2*[mediumCards numberOfItems]];
                                                                    mediumCards = nil;
                                                                }
                                                ];
@@ -163,17 +185,16 @@
 #pragma mark - CardIsSorting Delegate Function
 -(void)isMoving:(CardView *)card{
     
-    CGRect cardPosition = [card convertRect:card.bounds toView:self.view];
-    int sortedIndex = 0;
+    CGRect cardPosition = [card convertRect:card.bounds toView:self.scrollView];
     
     [self.scrollView bringSubviewToFront:[self.cardsViews objectAtIndex:card.tag]];
-    if (cardPosition.origin.x > 400 && card.tag < NOT_SORTED) {
+    if (cardPosition.origin.x > 380 && card.tag < NOT_SORTED) {
         [UIView animateWithDuration:0.25
                          animations:^{
                              card.transform = CGAffineTransformMakeScale(0.6f, 0.6f);
                          }
          ];
-    }else if(cardPosition.origin.x < 400 && card.tag > NOT_SORTED){
+    }else if(cardPosition.origin.x < 380 && card.tag > NOT_SORTED){
         [UIView animateWithDuration:0.25
                          animations:^{
                              card.transform = CGAffineTransformMakeScale(1.0/0.6, 1.0/0.6);
@@ -187,36 +208,36 @@
          ];
     }
 
+    if (cardPosition.origin.y + 20 < self.scrollView.contentOffset.y) {
+        [self attemptToMoveDiffPage:card];
+    }else if(cardPosition.origin.y + card.bounds.size.height - 20 > self.scrollView.contentOffset.y + 768.0){
+        [self attemptToMoveDiffPage:card];
+    }
 //    NSArray *nowOnDisplay = [self.sortedGroup indexesForVisibleItems];
 //    for (NSNumber *i in nowOnDisplay) {
 //        NSLog(@"visible index = %d",i.integerValue);
 //    }
     for (int i = NOT_SORTED;i<[self.cardsViews count];i++) {
         iCarousel *scoreBox = [self.cardsViews objectAtIndex:i];
-        CGRect boxPosition = [scoreBox convertRect:scoreBox.bounds toView:self.view];
-//        NSLog(@"scorebox position (x,y) = (%f, %f)",boxPosition.origin.x,boxPosition.origin.y);
-//        NSLog(@"card position (x,y) = (%f, %f)",card.frame.origin.x,card.frame.origin.y);
-//        NSLog(@"converted postition (x,y) = (%f, %f)",cardPosition.origin.x,cardPosition.origin.y);
+        CGRect boxPosition = [scoreBox convertRect:scoreBox.bounds toView:self.scrollView];
         
-            //if overlap
-        //TODO: change the highlight image
+        //if overlap
             if (CGRectIntersectsRect(boxPosition, cardPosition)) {
-                            scoreBox.backgroundColor = [UIColor lightGrayColor];
-                sortedIndex = scoreBox.tag;
+                        scoreBox.backgroundColor = [UIColor colorWithPatternImage:self.selectedImage.image];
             }else{
-                            scoreBox.backgroundColor = nil;
+                        scoreBox.backgroundColor = nil;
             }
         
     }
 }
 -(void)cardMovingEnd:(CardView *)card{
     int sortedToGroup = card.tag;
-    CGRect cardPosition = [card convertRect:card.bounds toView:self.view];
+    CGRect cardPosition = [card convertRect:card.bounds toView:self.scrollView];
     
     //NSLog(@"card.tag = %d",card.tag);
     //check overlap
     for (UIView *scoreBox in self.cardsViews) {
-        CGRect boxPosition = [scoreBox convertRect:scoreBox.bounds toView:self.view];
+        CGRect boxPosition = [scoreBox convertRect:scoreBox.bounds toView:self.scrollView];
         if (CGRectIntersectsRect(boxPosition, cardPosition)) {
             //assign to that group
             scoreBox.backgroundColor = nil;
@@ -242,9 +263,26 @@
     //NSLog(@"the card sorted to group %d",sortedToGroup);
     
     if (cardLeft == 0) {
-        //TODO:fuck I finished!!
         [self fuckIFinished];
     }
+    //update page control
+    int indexOfCardsNow = [self whereAmI:self.scrollView.contentOffset.y];
+    //NSLog(@"indexOfCardsNow %d",indexOfCardsNow);
+    switch (indexOfCardsNow) {
+        case 0:
+            [self.page_1 setLabel:[NSString stringWithFormat:@"%d",[self.cardsDatas[0] count]]];
+            break;
+        case 1:
+            [self.page_2 setLabel:[NSString stringWithFormat:@"%d",[self.cardsDatas[1] count]]];
+            break;
+        case 2:
+            [self.page_3 setLabel:[NSString stringWithFormat:@"%d",[self.cardsDatas[2] count]]];
+            break;
+        default:
+            break;
+    }
+
+    
 }
 
 -(NSInteger)moveCard:(CardView*)card fromGroup:(int)from toGroup:(int)to{
@@ -285,7 +323,13 @@
     }
     
 }
-#pragma mark -
+#pragma mark - card sorting move page function
+-(void)attemptToMoveDiffPage:(CardView*)card{
+    NSLog(@"try to move page");
+    //CGPoint oldPostion = card.center;
+    [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES ];
+
+}
 #pragma mark iCarousel methods
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
@@ -302,8 +346,7 @@
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
 {
     //TODO: handle the nested iCarousel View
-    UILabel *label = nil;
-    CardView *card = nil;
+    CardView *card;
     
 
     //NSLog(@"carousel number %d",carousel.tag);
@@ -318,12 +361,12 @@
     //view.image = [UIImage imageNamed:@"card.png"];
     view.contentMode = UIViewContentModeCenter;
     
-    label = [[UILabel alloc] initWithFrame:view.bounds];
-    label.backgroundColor = [UIColor clearColor];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.font = [label.font fontWithSize:8];
-    label.tag = -1;
-    [view addSubview:label];
+//    label = [[UILabel alloc] initWithFrame:view.bounds];
+//    label.backgroundColor = [UIColor clearColor];
+//    label.textAlignment = NSTextAlignmentCenter;
+//    label.font = [label.font fontWithSize:8];
+//    label.tag = -1;
+//    [view addSubview:label];
     
     card = [[CardView alloc] initWithFrame:view.frame];
     card.delegate = self;
@@ -348,7 +391,7 @@
     //        view.transform = CGAffineTransformMakeScale(0.7f, 0.7f);
     //    }
     item = [self.cardsDatas objectAtIndex:carousel.tag];
-    label.text = [NSString stringWithFormat:@"index %d",index];
+//    label.text = [NSString stringWithFormat:@"index %d",index];
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     card.imageView.image = [UIImage imageWithContentsOfFile:[documentPath stringByAppendingPathComponent:[item objectAtIndex:index]]];    //NSLog(@"index = %d",index);
 
@@ -372,6 +415,8 @@
             if (_carousel.type == iCarouselTypeCoverFlow2) {
                 return value*1.5;
             }else if(_carousel.type == iCarouselTypeRotary){
+                return 0.01;
+            }else if(_carousel.type == iCarouselTypeInvertedWheel){
                 return 0.01;
             }else{
                 return value*0.7;
@@ -413,9 +458,6 @@
     if (index != carousel.currentItemIndex) {
         [carousel scrollToItemAtIndex:index animated:YES];
     }
-    if (index %3 == 0) {
-        [self setLittleManAnimation];
-    }
     return NO;
 }
 #pragma mark - End Sorting
@@ -442,7 +484,8 @@
                          range.location = 0;
                          range.length = 3;
                          [self.cardsDatas removeObjectsInRange:range];
-                         [newViewController setUpDatas:self.cardsDatas label:self.labelDatas];
+                         [newViewController setUpDatas:self.cardsDatas];
+                         newViewController.stage = self.stage;
                          [newViewController setScrollViewOffset:self.scrollView.contentOffset];
                          [self.navigationController pushViewController:newViewController animated:NO];
                          
@@ -455,8 +498,13 @@
                          }
                          self.cardsDatas = nil;
                          self.cardsViews = nil;
-                         self.labelDatas = nil;
                          self.labelViews = nil;
+                         self.currentIndexs = nil;
+                         self.page_1 = nil;
+                         self.page_2 = nil;
+                         self.page_3 = nil;
+                         self.selectedImage = nil;
+                         self.timer = nil;
                      }
      ];
 }
@@ -466,10 +514,24 @@
     //put away cards when scroll away
     int indexOfCardsNow = [self whereAmI:scrollView.contentOffset.y];
     //NSLog(@"indexOfCardsNow %d",indexOfCardsNow);
+    switch (indexOfCardsNow) {
+        case 0:
+            self.page_1.highlighted = NO;
+            break;
+        case 1:
+            self.page_2.highlighted = NO;
+            break;
+        case 2:
+            self.page_3.highlighted = NO;
+            break;
+        default:
+            break;
+    }
+    
 
     [UIView animateWithDuration:0.2
                      animations:^{
-                         ((iCarousel*)[self.cardsViews objectAtIndex:indexOfCardsNow]).type = iCarouselTypeRotary;
+                         ((iCarousel*)[self.cardsViews objectAtIndex:indexOfCardsNow]).type = iCarouselTypeInvertedWheel;
                      }
      ];
 }
@@ -479,17 +541,30 @@
     //enable page scroll by hand
     //NSLog(@"will stop at %f",(*targetContentOffset).y);
     indexOfWouldBeCards = [self whereAmI:scrollView.contentOffset.y];
-    [self setLittleManAnimation];
+    
     [UIView animateWithDuration:0.8
                      animations:^{
                          ((iCarousel*)[self.cardsViews objectAtIndex:indexOfWouldBeCards]).type = iCarouselTypeWheel;
                      }
      ];
+    
+    switch (indexOfWouldBeCards) {
+        case 0:
+            self.page_1.highlighted = YES;
+            break;
+        case 1:
+            self.page_2.highlighted = YES;
+            break;
+        case 2:
+            self.page_3.highlighted = YES;
+            break;
+        default:
+            break;
+    }
+
 
 }
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    //NSLog(@"scrollViewDidScroll");
-}
+
 -(int)whereAmI:(CGFloat)offsetY{
     if (offsetY >= PAGE_1 && offsetY < PAGE_2) {
         return 0;
@@ -500,27 +575,5 @@
     }
 }
 
-#pragma mark - animation
--(void)setLittleManAnimation{
-    //NSLog(@"setLittleManAnimation");
-    int index = [self whereAmI:self.scrollView.contentOffset.y];
-    int leftCards = [[self.cardsDatas objectAtIndex:index] count];
-    //NSLog(@"%f",positionX);
-    [self.view addSubview:self.littleMan];
-    if (leftCards != 0) {
-        [self.littleMan setLabel:[NSString stringWithFormat:@"%d left!",leftCards]];
-    }else{
-        for (int i =0; i<NOT_SORTED; i++) {
-            if ([[self.cardsDatas objectAtIndex:i] count] >0) {
-                //leftCards = [[self.cardsDatas objectAtIndex:i] count];
-                index = i+1;
-                break;
-            }
-        }
-        [self.littleMan setLabel:[NSString stringWithFormat:@"check page %d!",index]];
-    }
-    
-    [self.littleMan action];
-}
 
 @end
